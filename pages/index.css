@@ -1,0 +1,8 @@
+@import '../vendor/normalize.css';
+@import '../assets/fonts/fonts.css';
+
+@import '../variables/variables.css';
+
+@import '../blocks/root/root.css';
+@import '../blocks/page/page.css';
+@import '../blocks/content/content.css';

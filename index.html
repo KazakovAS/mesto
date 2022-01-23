@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Edge и ряд мобильных браузеров слишком умны. Отключим это. -->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="date=no">
+    <meta name="format-detection" content="address=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="google" content="notranslate">
+
+    <!--  Ваще должны лежать в корне, но сборщика нет, так шо... -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png">
+    <link rel="icon" href="./assets/favicon/favicon.ico">
+
+    <title>Mesto</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <meta property="og:type" content="">
+    <meta property="og:title" content="">
+    <meta property="og:site_name" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <meta property="og:description" content="">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:site" content="">
+    <meta name="twitter:image" content="">
+
+    <link rel="stylesheet" href="./pages/index.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <img
+          class="header__logo"
+          src="./assets/images/header-logo.svg"
+          alt="Логотип проекта «Mesto»"
+        >
+      </header>
+
+      <main class="content">
+        <section class="profile">
+          <figure class="user">
+            <img
+              class="user__avatar"
+              src="./assets/images/lead-polka.jpg"
+              alt="Аватар пользователя"
+            >
+            <figcaption class="user__caption">
+              <div class="user__nickname">
+                <h1 class="user__nickname-text"></h1>
+                <button class="user__nickname-edit-button"></button>
+              </div>
+              <p class="user__description"></p>
+            </figcaption>
+          </figure>
+
+          <button class="profile__place-add-button"></button>
+        </section>
+
+        <section class="places">
+          <ul class="places__list">
+            <li class="places__item">
+              <article class="place">
+                <img 
+                  class="place__image"
+                  src=""
+                  alt=""
+                >
+                <div class="place__info">
+                  <h2 class="place__name"></h2>
+                  <button class="place__button"></button>
+                </div>
+              </article>
+            </li>
+          </ul>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+      </footer>
+
+      <div
+        class="modal overlay"
+        role="dialog"
+      >
+        <div class="modal__content">
+          <button
+            class="modal__button-close"
+            aria-label="Закрыть окно"
+          >
+          </button>
+
+          <div class="user-edit-modal">
+            <h2 class="user-edit-modal__title">
+              Редактировать профиль
+            </h2>
+
+            <form class="user-edit-form" action="">
+              <label class="user-edit-form__item">
+                <input
+                  class="user-edit-form__field"
+                  type="text"
+                  placeholder="Имя"
+                  minlength="2"
+                  maxlength="40"
+                  required
+                >
+              </label>
+              <label class="user-edit-form__item">
+                <input
+                  class="user-edit-form__field"
+                  type="text"
+                  placeholder="О себе"
+                  minlength="2"
+                  maxlength="240"
+                  required
+                >
+              </label>
+
+              <button class="user-edit-form__save">Сохранить</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="./scripts/index.js"></script>
+  </body>
+</html>
