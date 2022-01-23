@@ -10,5 +10,17 @@
 @import '../blocks/header/header.css';
 @import '../blocks/header/__logo/header__logo.css';
 
+@import '../blocks/profile/profile.css';
+@import '../blocks/profile/__place-add-button/profile__place-add-button.css';
+
+@import '../blocks/user/user.css';
+@import '../blocks/user/__avatar/user__avatar.css';
+@import '../blocks/user/__caption/user__caption.css';
+@import '../blocks/user/__nickname/user__nickname.css';
+@import '../blocks/user/__nickname-text/user__nickname-text.css';
+@import '../blocks/user/__description/user__description.css';
+@import '../blocks/user/__nickname-edit-button/user__nickname-edit-button.css';
+
+
 @import '../blocks/footer/footer.css';
 @import '../blocks/footer/__copyright/footer__copyright.css';
