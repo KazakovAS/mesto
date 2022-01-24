@@ -3,7 +3,7 @@ const userDescription = document.querySelector('.user__description');
 const placesEl = document.querySelector('.places__list');
 const userInfoEditButton = document.querySelector('.user__info-edit-button');
 const popup = document.querySelector('.popup');
-const popupOverlay = document.querySelector('.popup__overlay');
+const popupOverlay = document.querySelector('.popup-overlay');
 const popupCloseButton = document.querySelector('.popup__close-button');
 
 let places = [
