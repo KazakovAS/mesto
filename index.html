@@ -58,8 +58,9 @@
               <div class="user__nickname">
                 <h1 class="user__nickname-text"></h1>
                 <button
-                  class="user__nickname-edit-button"
+                  class="user__info-edit-button"
                   aria-label="Редактировать имя"
+                  type="button"
                 >
                 </button>
               </div>
@@ -70,6 +71,7 @@
           <button
             class="profile__place-add-button"
             aria-label="Добавить место"
+            type="button"
           >
           </button>
         </section>
@@ -84,36 +86,39 @@
       </footer>
 
       <div
-        class="modal overlay"
+        class="popup popup__overlay"
         role="dialog"
       >
-        <div class="modal__content">
+        <div class="popup__container">
           <button
-            class="modal__button-close"
+            class="popup__close-button"
             aria-label="Закрыть окно"
+            type="button"
           >
           </button>
 
-          <div class="user-edit-modal">
-            <h2 class="user-edit-modal__title">
+          <div class="user-info-edit-modal">
+            <h2 class="user-info-edit-modal__title">
               Редактировать профиль
             </h2>
 
-            <form class="user-edit-form" action="">
-              <label class="user-edit-form__item">
+            <form class="user-info-edit-form" id="user-info-edit-form">
+              <label class="user-info-edit-form__item">
                 <input
-                  class="user-edit-form__field"
+                  class="user-info-edit-form__field"
                   type="text"
+                  id="user-nickname-field"
                   placeholder="Имя"
                   minlength="2"
                   maxlength="40"
                   required
                 >
               </label>
-              <label class="user-edit-form__item">
+              <label class="user-info-edit-form__item">
                 <input
-                  class="user-edit-form__field"
+                  class="user-info-edit-form__field"
                   type="text"
+                  id="user-description-field"
                   placeholder="О себе"
                   minlength="2"
                   maxlength="240"
@@ -121,7 +126,7 @@
                 >
               </label>
 
-              <button class="user-edit-form__save">Сохранить</button>
+              <button class="user-info-edit-form__save-button">Сохранить</button>
             </form>
           </div>
         </div>

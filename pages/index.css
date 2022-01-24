@@ -19,7 +19,7 @@
 @import '../blocks/user/__nickname/user__nickname.css';
 @import '../blocks/user/__nickname-text/user__nickname-text.css';
 @import '../blocks/user/__description/user__description.css';
-@import '../blocks/user/__nickname-edit-button/user__nickname-edit-button.css';
+@import '../blocks/user/__info-edit-button/user__info-edit-button.css';
 
 @import '../blocks/places/places.css';
 @import '../blocks/places/__list/places__list.css';
@@ -29,7 +29,21 @@
 @import '../blocks/place/__info/place__info.css';
 @import '../blocks/place/__name/place__name.css';
 @import '../blocks/place/__like-button/place__like-button.css';
-
+@import '../blocks/place/__like-button/_active/place__like-button_active.css';
 
 @import '../blocks/footer/footer.css';
 @import '../blocks/footer/__copyright/footer__copyright.css';
+
+@import '../blocks/popup/popup.css';
+@import '../blocks/popup/_opened/popup_opened.css';
+@import '../blocks/popup/__overlay/popup__overlay.css';
+@import '../blocks/popup/__container/popup__container.css';
+@import '../blocks/popup/__close-button/popup__close-button.css';
+
+@import '../blocks/user-info-edit-modal/user-info-edit-modal.css';
+@import '../blocks/user-info-edit-modal/__title/user-info-edit-modal__title.css';
+
+@import '../blocks/user-info-edit-form/user-info-edit-form.css';
+@import '../blocks/user-info-edit-form/__item/user-info-edit-form__item.css';
+@import '../blocks/user-info-edit-form/__field/user-info-edit-form__field.css';
+@import '../blocks/user-info-edit-form/__save-button/user-info-edit-form__save-button.css';

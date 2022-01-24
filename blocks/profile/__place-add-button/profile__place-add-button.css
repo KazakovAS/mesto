@@ -10,6 +10,10 @@
     background-repeat: no-repeat;
     background-size: 16px;
     background-position: center;
+    cursor: pointer;
+    transition: opacity .6s;
+    padding-left: 0;
+    padding-right: 0;
     margin-top: 36px;
 }
 
@@ -19,4 +23,8 @@
         background-size: 22px;
         margin-top: 0;
     }
+}
+
+.profile__place-add-button:hover {
+    opacity: .6;
 }
