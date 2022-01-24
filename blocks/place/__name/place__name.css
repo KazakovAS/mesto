@@ -1,0 +1,8 @@
+.place__name {
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+    color: var(--color-supplementary);
+    margin-top: 0;
+    margin-bottom: 0;
+}
