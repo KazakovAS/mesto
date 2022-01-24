@@ -1,11 +1,11 @@
 .user-info-edit-form {
-    display: flex;
-    flex-direction: column;
-    margin-top: 75px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 75px;
 }
 
 @media (min-width: 1280px) {
-    .user-info-edit-form {
-        margin-top: 34px;
-    }
+  .user-info-edit-form {
+    margin-top: 34px;
+  }
 }
