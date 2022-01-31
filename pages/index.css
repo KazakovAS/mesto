@@ -39,10 +39,8 @@
 @import '../blocks/popup/__container/popup__container.css';
 @import '../blocks/popup/__close-button/popup__close-button.css';
 
-@import '../blocks/user-info-edit-modal/user-info-edit-modal.css';
-@import '../blocks/user-info-edit-modal/__title/user-info-edit-modal__title.css';
-
-@import '../blocks/user-info-edit-form/user-info-edit-form.css';
-@import '../blocks/user-info-edit-form/__item/user-info-edit-form__item.css';
-@import '../blocks/user-info-edit-form/__field/user-info-edit-form__field.css';
-@import '../blocks/user-info-edit-form/__save-button/user-info-edit-form__save-button.css';
+@import '../blocks/form/form.css';
+@import '../blocks/form/__title/form__title.css';
+@import '../blocks/form/__item/form__item.css';
+@import '../blocks/form/__field/form__field.css';
+@import '../blocks/form/__save-button/form__save-button.css';

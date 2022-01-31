@@ -1,4 +1,4 @@
-.user-info-edit-form__field {
+.form__field {
   display: block;
   width: 100%;
   box-sizing: border-box;
@@ -9,7 +9,7 @@
   padding-bottom: 13px;
 }
 
-.user-info-edit-form__field:focus {
+.form__field:focus {
   outline: none;
   border-color: rgba(0, 0, 0, 1);
 }

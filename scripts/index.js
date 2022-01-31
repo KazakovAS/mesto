@@ -66,12 +66,12 @@ function fillPlaces() {
   }
 };
 
-function popupOpened() {
+function openPopup() {
   popup.classList.add('popup_opened');
   setUserInfoEditFormFieldValue();
 };
 
-function popupClosed() {
+function closePopup() {
   popup.classList.remove('popup_opened');
 };
 
@@ -80,13 +80,13 @@ setTextValue(userDescription, 'Исследователь океана');
 
 fillPlaces();
 
-userInfoEditButton.addEventListener('click', popupOpened);
+userInfoEditButton.addEventListener('click', openPopup);
 
 popup.addEventListener('click', function (e) {
-  if (e.target === popup) popup.classList.remove('popup_opened');
+  if (e.target === popup) closePopup();
 });
 
-popupCloseButton.addEventListener('click', popupClosed);
+popupCloseButton.addEventListener('click', closePopup);
 
 placesEl.addEventListener('click', function (e) {
   if (e.target.classList.contains('place__like-button')) e.target.classList.toggle('place__like-button_active');
@@ -109,5 +109,5 @@ userInfoEditForm.addEventListener('submit', function (e) {
   setTextValue(userNickname, userNicknameField.value);
   setTextValue(userDescription, userDescriptionField.value);
 
-  popupClosed();
+  closePopup();
 });

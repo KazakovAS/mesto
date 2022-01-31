@@ -85,7 +85,7 @@
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
       </footer>
 
-      <div
+      <section
         class="popup"
         role="dialog"
       >
@@ -97,41 +97,39 @@
           >
           </button>
 
-          <div class="user-info-edit-modal">
-            <h2 class="user-info-edit-modal__title">
+          <form class="form user-info-edit-form" id="user-info-edit-form">
+            <h2 class="form__title user-info-edit-form__title">
               Редактировать профиль
             </h2>
 
-            <form class="user-info-edit-form" id="user-info-edit-form">
-              <label class="user-info-edit-form__item">
-                <input
-                  class="user-info-edit-form__field"
-                  type="text"
-                  id="user-nickname-field"
-                  placeholder="Имя"
-                  minlength="2"
-                  maxlength="40"
-                  required
-                >
-              </label>
-              <label class="user-info-edit-form__item">
-                <input
-                  class="user-info-edit-form__field"
-                  type="text"
-                  id="user-description-field"
-                  placeholder="О себе"
-                  minlength="2"
-                  maxlength="240"
-                  required
-                >
-              </label>
+            <label class="form__item user-info-edit-form__item">
+              <input
+                class="form__field user-info-edit-form__field"
+                type="text"
+                id="user-nickname-field"
+                placeholder="Имя"
+                minlength="2"
+                maxlength="40"
+                required
+              >
+            </label>
+            <label class="form__item user-info-edit-form__item">
+              <input
+                class="form__field user-info-edit-form__field"
+                type="text"
+                id="user-description-field"
+                placeholder="О себе"
+                minlength="2"
+                maxlength="240"
+                required
+              >
+            </label>
 
-              <button class="user-info-edit-form__save-button">Сохранить</button>
-            </form>
-          </div>
+            <button class="form__save-button">Сохранить</button>
+          </form>
         </div>
-      </div>
-
+      </section>
+      
     </div>
 
     <script src="./scripts/index.js"></script>

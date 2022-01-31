@@ -1,4 +1,4 @@
-.user-info-edit-form__save-button {
+.form__save-button {
   font-size: 14px;
   line-height: 17px;
   background-color: var(--background-color-default);
@@ -12,13 +12,13 @@
 }
 
 @media (min-width: 1280px) {
-  .user-info-edit-form__save-button {
+  .form__save-button {
     font-size: 18px;
     line-height: 22px;
     margin-top: 48px;
   }
 }
 
-.user-info-edit-form__save-button:hover {
+.form__save-button:hover {
   background-color: rgba(0, 0, 0, .8);
 }
