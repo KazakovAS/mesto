@@ -25,6 +25,7 @@
 @import '../blocks/places/__list/places__list.css';
 
 @import '../blocks/place/place.css';
+@import '../blocks/place/__remove-button/place__remove-button.css';
 @import '../blocks/place/__image/place__image.css';
 @import '../blocks/place/__info/place__info.css';
 @import '../blocks/place/__name/place__name.css';

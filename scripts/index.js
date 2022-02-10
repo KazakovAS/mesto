@@ -53,6 +53,11 @@ function fillPlaces() {
     placesEl.insertAdjacentHTML('beforeend', `
       <li class="places__item">
         <article class="place">
+            <button
+              class="place__remove-button"
+              aria-label="Удалить место"
+            >
+            </button>
           <img
             class="place__image"
             src="${place.imagePath}"
