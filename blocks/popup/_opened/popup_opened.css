@@ -1,20 +1,4 @@
 .popup_opened {
   visibility: visible;
   opacity: 1;
-  animation: openPopup .6s;
-}
-
-@keyframes openPopup {
-  0% {
-    visibility: hidden;
-  }
-
-  1% {
-    visibility: visible;
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
 }

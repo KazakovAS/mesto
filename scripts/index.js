@@ -1,61 +1,70 @@
 const userNickname = document.querySelector('.user__nickname-text');
 const userDescription = document.querySelector('.user__description');
 const placesEl = document.querySelector('.places__list');
+const placeItemTemplate = document.querySelector('#place-item').content;
 const userInfoEditButton = document.querySelector('.user__info-edit-button');
 const placeAddButton = document.querySelector('.profile__place-add-button');
-const popups = document.querySelectorAll('.popup');
+const closePopupButtons = document.querySelectorAll('.popup__close-button');
 const userInfoEditPopup = document.querySelector('#user-info-edit-popup');
 const placeAddPopup = document.querySelector('#place-add-popup');
 const placePhotoPopup = document.querySelector('#place-photo-popup');
 const placePopupImage = document.querySelector('.place-popup__image');
 const placePopupImageCaption = document.querySelector('.place-popup__caption');
+const userInfoEditForm = document.querySelector('#user-info-edit-form');
+const userNicknameField = document.querySelector('#user-nickname-field');
+const userDescriptionField = document.querySelector('#user-description-field');
+const placeAddForm = document.querySelector('#place-add-form');
+const placeNameField = document.querySelector('#place-name-field');
+const placeImageField = document.querySelector('#place-image-field');
 
-let places = [
+const places = [
   {
-    id: createUUID(),
     name: 'Карачаевск',
-    imagePath: './assets/images/karachaevsk.jpg',
-    imageAlt: 'Фото Карачаевска'
+    link: './assets/images/karachaevsk.jpg'
   },
   {
-    id: createUUID(),
     name: 'Гора Эльбрус',
-    imagePath: './assets/images/elbrus.jpg',
-    imageAlt: 'Фото Эльбруса'
+    link: './assets/images/elbrus.jpg'
   },
   {
-    id: createUUID(),
     name: 'Домбай',
-    imagePath: './assets/images/dombay.jpg',
-    imageAlt: 'Фото Домбая'
+    link: './assets/images/dombay.jpg'
   },
   {
-    id: createUUID(),
     name: 'Карачаево-Черкессия',
-    imagePath: './assets/images/karachaevsk.jpg',
-    imageAlt: 'Фото Карачаевска'
+    link: './assets/images/karachaevsk.jpg'
   },
   {
-    id: createUUID(),
     name: 'Гора Эльбрус',
-    imagePath: './assets/images/elbrus.jpg',
-    imageAlt: 'Фото Эльбруса'
+    link: './assets/images/elbrus.jpg'
   },
   {
-    id: createUUID(),
     name: 'Домбай',
-    imagePath: './assets/images/dombay.jpg',
-    imageAlt: 'Фото Домбая'
+    link: './assets/images/dombay.jpg'
   }
 ]
 
 function setTextValue(item, value) {
-  return item.textContent = `${value}`;
+  item.textContent = `${value}`;
 }
 
-setTextValue(userNickname, 'Жак-Ив Кусто');
-setTextValue(userDescription, 'Исследователь океана');
+function addPlace(place) {
+  const placeItemEl = placeItemTemplate.querySelector('.places__item').cloneNode(true);
+  const placeLikeButton = placeItemEl.querySelector('.place__like-button');
+  const placeRemoveButton = placeItemEl.querySelector('.place__remove-button');
+  const placeImage = placeItemEl.querySelector('.place__image');
+  const placeName = placeItemEl.querySelector('.place__name');
 
+  placeName.textContent = place.name;
+  placeImage.src = place.link;
+  placeImage.alt = place.name;
+
+  placeLikeButton.addEventListener('click', setLikeStatus);
+  placeRemoveButton.addEventListener('click', removePlaceItem);
+  placeImage.addEventListener('click', openPlacePopup);
+
+  placesEl.prepend(placeItemEl);
+}
 
 function fillPlaces() {
   for (const place of places) {
@@ -63,101 +72,58 @@ function fillPlaces() {
   }
 }
 
-function addPlace(place) {
-  placesEl.insertAdjacentHTML('afterbegin', `
-    <li class="places__item" data-id="${place.id}">
-      <article class="place">
-        <button
-          class="place__remove-button"
-          aria-label="Удалить место"
-        >
-        </button>
-        <img
-          class="place__image"
-          src="${place.imagePath}"
-          alt="${place.imageAlt}"
-        >
-        <div class="place__info">
-          <h2 class="place__name">${place.name}</h2>
-          <button
-            class="place__like-button"
-            aria-label="Нравится"
-          >
-          </button>
-        </div>
-      </article>
-    </li>
-  `)
+function setUserInfoEditFormFieldValue() {
+  userNicknameField.value = userNickname.textContent;
+  userDescriptionField.value = userDescription.textContent;
 }
 
-fillPlaces();
-
-
 function openPopup(popupEl) {
-  popupEl.classList.remove('popup_closed');
   popupEl.classList.add('popup_opened');
+}
+
+function closePopup(e) {
+  const popup = e.target.closest('.popup');
+
+  popup.classList.remove('popup_opened');
+}
+
+function openProfilePopup(e) {
+  openPopup(e)
   setUserInfoEditFormFieldValue();
 }
 
+closePopupButtons.forEach(closePopupButton => {
+  closePopupButton.addEventListener('click', function (e) {
+    closePopup(e);
+  });
+});
+
+
 userInfoEditButton.addEventListener('click', function () {
-  openPopup(userInfoEditPopup);
+  openProfilePopup(userInfoEditPopup);
 });
 
 placeAddButton.addEventListener('click', function () {
   openPopup(placeAddPopup);
 });
 
-
-function closePopup(e) {
-  const popup = e.target.closest('.popup');
-
-  popup.classList.add('popup_closed');
-  popup.classList.remove('popup_opened');
+function removePlaceItem(e) {
+  e.target.closest('.places__item').remove();
 }
 
-popups.forEach(popup => {
-  popup.addEventListener('click', function (e) {
-    if (e.target === popup) closePopup(e);
-    if (e.target.classList.contains('popup__close-button')) closePopup(e);
-  });
-})
-
-
-placesEl.addEventListener('click', function (e) {
-  if (e.target.classList.contains('place__like-button')) e.target.classList.toggle('place__like-button_active');
-
-  if (e.target.classList.contains('place__remove-button')) {
-    const item = e.target.closest('.places__item');
-
-    places.splice(findItemPosition(item), 1);
-    item.remove();
-  }
-
-  if (e.target.classList.contains('place__image')) {
-    const item = places[findItemPosition(e.target)];
-
-    placePopupImage.src = item.imagePath;
-    placePopupImage.alt = item.imageAlt;
-    placePopupImageCaption.textContent = item.name;
-    openPopup(placePhotoPopup);
-  }
-});
-
-function findItemPosition(e) {
-  const item = e.closest('.places__item');
-  const itemId = item.dataset.id;
-
-  return places.findIndex(e => e.id === itemId);
+function setLikeStatus(e) {
+  e.target.classList.toggle('place__like-button_active');
 }
 
+function openPlacePopup(e) {
+  setPlacePopupData(e);
+  openPopup(placePhotoPopup);
+}
 
-const userInfoEditForm = document.getElementById('user-info-edit-form');
-const userNicknameField = document.getElementById('user-nickname-field');
-const userDescriptionField = document.getElementById('user-description-field');
-
-function setUserInfoEditFormFieldValue() {
-  userNicknameField.value = userNickname.textContent;
-  userDescriptionField.value = userDescription.textContent;
+function setPlacePopupData(e) {
+  placePopupImage.src = e.target.src;
+  placePopupImage.alt = e.target.alt;
+  placePopupImageCaption.textContent = e.target.alt;
 }
 
 userInfoEditForm.addEventListener('submit', function (e) {
@@ -169,29 +135,19 @@ userInfoEditForm.addEventListener('submit', function (e) {
   closePopup(e);
 });
 
-const placeAddForm = document.getElementById('place-add-form');
-const placeName = document.getElementById('place-name-field');
-const placeImage = document.getElementById('place-image-field');
-
 placeAddForm.addEventListener('submit', function (e) {
   e.preventDefault();
 
   const place = {
-    id: createUUID(),
-    name: placeName.value,
-    imagePath: placeImage.value,
-    imageAlt: `Фото ${ placeName.value }`
+    name: placeNameField.value,
+    link: placeImageField.value
   }
-
-  places.unshift(place);
 
   addPlace(place);
   closePopup(e);
 });
 
-function createUUID() {
-  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-  );
-}
 
+setTextValue(userNickname, 'Жак-Ив Кусто');
+setTextValue(userDescription, 'Исследователь океана');
+fillPlaces();
