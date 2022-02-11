@@ -8,8 +8,8 @@ const closePopupButtons = document.querySelectorAll('.popup__close-button');
 const userInfoEditPopup = document.querySelector('#user-info-edit-popup');
 const placeAddPopup = document.querySelector('#place-add-popup');
 const placePhotoPopup = document.querySelector('#place-photo-popup');
-const placePopupImage = document.querySelector('.place-popup__image');
-const placePopupImageCaption = document.querySelector('.place-popup__caption');
+const placePopupImage = document.querySelector('.popup__image');
+const placePopupImageCaption = document.querySelector('.popup__caption');
 const userInfoEditForm = document.querySelector('#user-info-edit-form');
 const userNicknameField = document.querySelector('#user-nickname-field');
 const userDescriptionField = document.querySelector('#user-description-field');
@@ -97,7 +97,6 @@ closePopupButtons.forEach(closePopupButton => {
     closePopup(e);
   });
 });
-
 
 userInfoEditButton.addEventListener('click', function () {
   openProfilePopup(userInfoEditPopup);
