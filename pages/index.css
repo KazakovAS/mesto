@@ -36,9 +36,15 @@
 @import '../blocks/footer/__copyright/footer__copyright.css';
 
 @import '../blocks/popup/popup.css';
+@import '../blocks/popup/_closed/popup_closed.css';
 @import '../blocks/popup/_opened/popup_opened.css';
 @import '../blocks/popup/__container/popup__container.css';
 @import '../blocks/popup/__close-button/popup__close-button.css';
+
+@import '../blocks/place-popup/__container/place-popup__container.css';
+@import '../blocks/place-popup/__figure/place-popup__figure.css';
+@import '../blocks/place-popup/__image/place-popup__image.css';
+@import '../blocks/place-popup/__caption/place-popup__caption.css';
 
 @import '../blocks/form/form.css';
 @import '../blocks/form/__title/form__title.css';
