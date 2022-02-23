@@ -113,6 +113,7 @@
                 maxlength="40"
                 required
               >
+              <span class="form__field--error"></span>
             </label>
             <label class="form__item">
               <input
@@ -121,9 +122,10 @@
                 id="user-description-field"
                 placeholder="О себе"
                 minlength="2"
-                maxlength="240"
+                maxlength="200"
                 required
               >
+              <span class="form__field--error"></span>
             </label>
 
             <button class="form__save-button">Сохранить</button>
@@ -151,14 +153,15 @@
 
             <label class="form__item">
               <input
-                class="form__field"
+                class="form__field form__field_type_error"
                 type="text"
                 id="place-name-field"
                 placeholder="Название"
                 minlength="2"
-                maxlength="40"
+                maxlength="30"
                 required
               >
+              <span class="form__field-error">Вы пропустили это поле.</span>
             </label>
             <label class="form__item">
               <input
@@ -168,9 +171,10 @@
                 placeholder="Ссылка на картинку"
                 required
               >
+              <span class="form__field--error"></span>
             </label>
 
-            <button class="form__save-button">Создать</button>
+            <button class="form__save-button" disabled>Создать</button>
           </form>
         </div>
       </section>
