@@ -113,7 +113,7 @@
                 maxlength="40"
                 required
               >
-              <span class="form__field--error"></span>
+              <span class="form__field-error" id="error-user-nickname-field"></span>
             </label>
             <label class="form__item">
               <input
@@ -125,10 +125,10 @@
                 maxlength="200"
                 required
               >
-              <span class="form__field--error"></span>
+              <span class="form__field-error" id="error-user-description-field"></span>
             </label>
 
-            <button class="form__save-button">Сохранить</button>
+            <button class="form__submit">Сохранить</button>
           </form>
         </div>
       </section>
@@ -146,14 +146,14 @@
           >
           </button>
 
-          <form class="form" id="place-add-form">
+          <form class="form" id="place-add-form" action="" method="POST" novalidate>
             <h2 class="form__title">
               Новое место
             </h2>
 
             <label class="form__item">
               <input
-                class="form__field form__field_type_error"
+                class="form__field"
                 type="text"
                 id="place-name-field"
                 placeholder="Название"
@@ -161,20 +161,20 @@
                 maxlength="30"
                 required
               >
-              <span class="form__field-error">Вы пропустили это поле.</span>
+              <span class="form__field-error" id="error-place-name-field">Вы пропустили это поле.</span>
             </label>
             <label class="form__item">
               <input
                 class="form__field"
-                type="text"
+                type="url"
                 id="place-image-field"
                 placeholder="Ссылка на картинку"
                 required
               >
-              <span class="form__field--error"></span>
+              <span class="form__field-error" id="error-place-image-field"></span>
             </label>
 
-            <button class="form__save-button" disabled>Создать</button>
+            <button class="form__submit">Создать</button>
           </form>
         </div>
       </section>

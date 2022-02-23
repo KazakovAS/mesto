@@ -5,7 +5,6 @@ const placeItemTemplate = document.querySelector('#place-item').content;
 const userInfoEditButton = document.querySelector('.user__info-edit-button');
 const placeAddButton = document.querySelector('.profile__place-add-button');
 const popups = document.querySelectorAll('.popup');
-// const closePopupButtons = document.querySelectorAll('.popup__close-button');
 const userInfoEditPopup = document.querySelector('#user-info-edit-popup');
 const userInfoEditForm = userInfoEditPopup.querySelector('#user-info-edit-form');
 const userNicknameField = userInfoEditForm.querySelector('#user-nickname-field');
@@ -153,12 +152,6 @@ placeAddButton.addEventListener('click', function () {
   openPopup(placeAddPopup);
 });
 
-// closePopupButtons.forEach(closePopupButton => {
-//   closePopupButton.addEventListener('click', function (e) {
-//     closePopup(e);
-//   });
-// });
-
 popups.forEach(popup => {
   popup.addEventListener('click', function (e) {
     if (e.target === popup) closePopup(e);
@@ -169,3 +162,77 @@ popups.forEach(popup => {
 setTextValue(userNickname, 'Жак-Ив Кусто');
 setTextValue(userDescription, 'Исследователь океана');
 fillPlaces();
+
+
+
+//////////////////////////////////////
+function formSubmit(e) {
+  e.preventDefault();
+}
+
+function setInputValid({ inputErrorClass, errorClass }, field, errorMessage) {
+  console.log(errorMessage)
+  field.classList.remove(inputErrorClass);
+  errorMessage.classList.remove(errorClass);
+}
+
+function setInputInvalid({ inputErrorClass, errorClass }, field, errorMessage) {
+  console.log(errorMessage)
+  field.classList.add(inputErrorClass);
+
+  errorMessage.textContent = field.validationMessage;
+  errorMessage.classList.add(errorClass);
+}
+
+function checkInputValidity(rest, form, field) {
+  const errorMessage = form.querySelector(`#error-${field.id}`);
+
+  if (field.validity.valid) {
+    console.log(form, errorMessage)
+    setInputValid(rest, field, errorMessage);
+  } else {
+    setInputInvalid(rest, field, errorMessage);
+  }
+}
+
+function disableSubmitButton(inactiveButtonClass, button) {
+  button.setAttribute('disabled', '');
+  button.classList.add(inactiveButtonClass);
+}
+
+function enableSubmitButton(inactiveButtonClass, button) {
+  button.removeAttribute('disabled');
+  button.classList.remove(inactiveButtonClass);
+}
+
+function checkSubmitButtonValidity({ inactiveButtonClass }, form, button) {
+  if (form.checkValidity()) {
+    enableSubmitButton(inactiveButtonClass, button)
+  } else {
+    disableSubmitButton(inactiveButtonClass, button)
+  }
+}
+
+function enableValidation({ formSelector, inputSelector, submitButtonSelector, ...rest }) {
+  const form = document.querySelector(formSelector);
+  const fields = form.querySelectorAll(inputSelector);
+  const button = form.querySelector(submitButtonSelector);
+
+  form.addEventListener('submit', formSubmit);
+
+  fields.forEach(field => {
+    field.addEventListener('input', function() {
+      checkInputValidity(rest, form, field, button);
+      checkSubmitButtonValidity(rest, form, button);
+    });
+  });
+}
+
+enableValidation({
+   formSelector: '.form',
+   inputSelector: '.form__field',
+   submitButtonSelector: '.form__submit',
+   inactiveButtonClass: 'form__submit_type_disabled',
+   inputErrorClass: 'form__field_type_error',
+   errorClass: 'form__field-error_visible'
+});
