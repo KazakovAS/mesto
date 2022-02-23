@@ -98,11 +98,6 @@ function closePopupByEscape(e) {
   if (e.key === 'Escape') closePopup();
 }
 
-function openProfilePopup(e) {
-  openPopup(e);
-  setUserInfoEditFormFieldValue();
-}
-
 function removePlaceItem(e) {
   e.target.closest('.places__item').remove();
 }
@@ -132,7 +127,7 @@ userInfoEditForm.addEventListener('submit', function (e) {
 });
 
 userInfoEditButton.addEventListener('click', function () {
-  openProfilePopup(userInfoEditPopup);
+  openPopup(userInfoEditPopup);
 });
 
 placeAddForm.addEventListener('submit', function (e) {
@@ -162,77 +157,4 @@ popups.forEach(popup => {
 setTextValue(userNickname, 'Жак-Ив Кусто');
 setTextValue(userDescription, 'Исследователь океана');
 fillPlaces();
-
-
-
-//////////////////////////////////////
-function formSubmit(e) {
-  e.preventDefault();
-}
-
-function setInputValid({ inputErrorClass, errorClass }, field, errorMessage) {
-  console.log(errorMessage)
-  field.classList.remove(inputErrorClass);
-  errorMessage.classList.remove(errorClass);
-}
-
-function setInputInvalid({ inputErrorClass, errorClass }, field, errorMessage) {
-  console.log(errorMessage)
-  field.classList.add(inputErrorClass);
-
-  errorMessage.textContent = field.validationMessage;
-  errorMessage.classList.add(errorClass);
-}
-
-function checkInputValidity(rest, form, field) {
-  const errorMessage = form.querySelector(`#error-${field.id}`);
-
-  if (field.validity.valid) {
-    console.log(form, errorMessage)
-    setInputValid(rest, field, errorMessage);
-  } else {
-    setInputInvalid(rest, field, errorMessage);
-  }
-}
-
-function disableSubmitButton(inactiveButtonClass, button) {
-  button.setAttribute('disabled', '');
-  button.classList.add(inactiveButtonClass);
-}
-
-function enableSubmitButton(inactiveButtonClass, button) {
-  button.removeAttribute('disabled');
-  button.classList.remove(inactiveButtonClass);
-}
-
-function checkSubmitButtonValidity({ inactiveButtonClass }, form, button) {
-  if (form.checkValidity()) {
-    enableSubmitButton(inactiveButtonClass, button)
-  } else {
-    disableSubmitButton(inactiveButtonClass, button)
-  }
-}
-
-function enableValidation({ formSelector, inputSelector, submitButtonSelector, ...rest }) {
-  const form = document.querySelector(formSelector);
-  const fields = form.querySelectorAll(inputSelector);
-  const button = form.querySelector(submitButtonSelector);
-
-  form.addEventListener('submit', formSubmit);
-
-  fields.forEach(field => {
-    field.addEventListener('input', function() {
-      checkInputValidity(rest, form, field, button);
-      checkSubmitButtonValidity(rest, form, button);
-    });
-  });
-}
-
-enableValidation({
-   formSelector: '.form',
-   inputSelector: '.form__field',
-   submitButtonSelector: '.form__submit',
-   inactiveButtonClass: 'form__submit_type_disabled',
-   inputErrorClass: 'form__field_type_error',
-   errorClass: 'form__field-error_visible'
-});
+setUserInfoEditFormFieldValue();
