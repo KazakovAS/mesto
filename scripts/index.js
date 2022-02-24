@@ -98,6 +98,16 @@ function closePopupByEscape(e) {
   if (e.key === 'Escape') closePopup();
 }
 
+function openProfilePopup(e) {
+  setUserInfoEditFormFieldValue();
+  openPopup(e);
+
+  // временное решение пока не прошли модули
+  const form = e.querySelector('.form');
+  const button = e.querySelector('.form__submit');
+  checkSubmitButtonValidity({ inactiveButtonClass: 'form__submit_type_disabled' }, form, button);
+}
+
 function removePlaceItem(e) {
   e.target.closest('.places__item').remove();
 }
@@ -109,6 +119,15 @@ function setLikeStatus(e) {
 function openPlacePopup(e) {
   setPlacePopupData(e);
   openPopup(placePhotoPopup);
+}
+
+function openAddPlacePopup(e) {
+  openPopup(e);
+
+  // временное решение пока не прошли модули
+  const form = e.querySelector('.form');
+  const button = e.querySelector('.form__submit');
+  checkSubmitButtonValidity({ inactiveButtonClass: 'form__submit_type_disabled' }, form, button);
 }
 
 function setPlacePopupData(e) {
@@ -127,7 +146,7 @@ userInfoEditForm.addEventListener('submit', function (e) {
 });
 
 userInfoEditButton.addEventListener('click', function () {
-  openPopup(userInfoEditPopup);
+  openProfilePopup(userInfoEditPopup);
 });
 
 placeAddForm.addEventListener('submit', function (e) {
@@ -144,7 +163,7 @@ placeAddForm.addEventListener('submit', function (e) {
 
 placeAddButton.addEventListener('click', function () {
   placeAddForm.reset();
-  openPopup(placeAddPopup);
+  openAddPlacePopup(placeAddPopup);
 });
 
 popups.forEach(popup => {
@@ -157,4 +176,3 @@ popups.forEach(popup => {
 setTextValue(userNickname, 'Жак-Ив Кусто');
 setTextValue(userDescription, 'Исследователь океана');
 fillPlaces();
-setUserInfoEditFormFieldValue();
