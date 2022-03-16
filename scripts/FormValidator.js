@@ -57,6 +57,16 @@ export default class FormValidator {
     this._submitButton.classList.remove(this._settings.inactiveButtonClass);
   }
 
+  resetErrors() {
+    this.resetForm();
+
+    this._fields.forEach(field => {
+      this._checkInputValidity(field);
+    });
+
+    this.checkSubmitButtonValidity();
+  }
+
   resetForm() {
     this._form.reset();
   }

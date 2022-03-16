@@ -2,13 +2,9 @@ import places from './data.js';
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 
-const forms = document.querySelectorAll('form');
-
-
+// const forms = document.querySelectorAll('.form');
 const userNickname = document.querySelector('.user__nickname-text');
 const userDescription = document.querySelector('.user__description');
-const placesEl = document.querySelector('.places__list');
-const placeItemTemplate = document.querySelector('#place-item').content;
 const userInfoEditButton = document.querySelector('.user__info-edit-button');
 const placeAddButton = document.querySelector('.profile__place-add-button');
 const popups = document.querySelectorAll('.popup');
@@ -33,51 +29,39 @@ const validationConfig = {
   errorClass: 'form__field-error_visible'
 };
 
-forms.forEach(form => {
-  const formValidation = new FormValidator(validationConfig, form);
+// forms.forEach(form => {
+//   const formValidation = new FormValidator(validationConfig, form);
+//
+//   formValidation.enableValidation();
+// });
 
-  formValidation.enableValidation();
-});
+const placeAddFormValidation = new FormValidator(validationConfig, placeAddForm);
+const userInfoEditFormValidation = new FormValidator(validationConfig, userInfoEditForm);
+
+placeAddFormValidation.enableValidation();
+userInfoEditFormValidation.enableValidation();
 
 
+function renderCard(data) {
+  const placesEl = document.querySelector('.places__list');
+  const card = new Card(data, '#place-item');
 
-
-
-function setTextValue(item, value) {
-  item.textContent = `${value}`;
-}
-
-function createPlaceCard(place) {
-  const placeItemEl = placeItemTemplate.cloneNode(true);
-  const placeLikeButton = placeItemEl.querySelector('.place__like-button');
-  const placeRemoveButton = placeItemEl.querySelector('.place__remove-button');
-  const placeImage = placeItemEl.querySelector('.place__image');
-  const placeName = placeItemEl.querySelector('.place__name');
-
-  placeName.textContent = place.name;
-  placeImage.src = place.link;
-  placeImage.alt = place.name;
-
-  placeLikeButton.addEventListener('click', setLikeStatus);
-  placeRemoveButton.addEventListener('click', removePlaceItem);
-  placeImage.addEventListener('click', openPlacePopup);
-
-  return placeItemEl;
-}
-
-function renderPlaceCard(place) {
-  placesEl.prepend(createPlaceCard(place));
+  placesEl.prepend(card.createCard());
 }
 
 function fillPlaces() {
   for (const place of places) {
-    renderPlaceCard(place);
+    renderCard(place);
   }
 }
 
 function setUserInfoEditFormFieldValue() {
   userNicknameField.value = userNickname.textContent;
   userDescriptionField.value = userDescription.textContent;
+}
+
+function setTextValue(item, value) {
+  item.textContent = `${value}`;
 }
 
 function openPopup(popupEl) {
@@ -101,15 +85,7 @@ function openProfilePopup(e) {
   setUserInfoEditFormFieldValue();
   openPopup(e);
 
-  // checkSubmitButtonValidity({ inactiveButtonClass: 'form__submit_type_disabled' }, form, button);
-}
-
-function removePlaceItem(e) {
-  e.target.closest('.places__item').remove();
-}
-
-function setLikeStatus(e) {
-  e.target.classList.toggle('place__like-button_active');
+  userInfoEditFormValidation.checkSubmitButtonValidity();
 }
 
 function openPlacePopup(e) {
@@ -120,7 +96,7 @@ function openPlacePopup(e) {
 function openAddPlacePopup(e) {
   openPopup(e);
 
-  // checkSubmitButtonValidity({ inactiveButtonClass: 'form__submit_type_disabled' }, form, button);
+  placeAddFormValidation.checkSubmitButtonValidity();
 }
 
 function setPlacePopupData(e) {
@@ -147,28 +123,25 @@ placeAddForm.addEventListener('submit', function (e) {
 
   const place = {
     name: placeNameField.value,
-    link: placeImageField.value
+    image: placeImageField.value
   }
 
-  renderPlaceCard(place);
+  renderCard(place);
   closePopup();
 });
 
 placeAddButton.addEventListener('click', function () {
-  // placeAddForm.reset();
+  placeAddFormValidation.resetForm();
   openAddPlacePopup(placeAddPopup);
 });
 
 popups.forEach(popup => {
   popup.addEventListener('click', function (e) {
-    if (e.target === popup) closePopup(e);
-    if (e.target.classList.contains('popup__close-button')) closePopup(e);
+    if (e.target === popup) closePopup();
+    if (e.target.classList.contains('popup__close-button')) closePopup();
   });
 })
 
 setTextValue(userNickname, 'Жак-Ив Кусто');
 setTextValue(userDescription, 'Исследователь океана');
 fillPlaces();
-
-
-console.log(placeAddForm)
