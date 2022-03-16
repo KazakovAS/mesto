@@ -1,3 +1,10 @@
+import places from './data.js';
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
+
+const forms = document.querySelectorAll('form');
+
+
 const userNickname = document.querySelector('.user__nickname-text');
 const userDescription = document.querySelector('.user__description');
 const placesEl = document.querySelector('.places__list');
@@ -17,32 +24,24 @@ const placePhotoPopup = document.querySelector('#place-photo-popup');
 const placePopupImage = placePhotoPopup.querySelector('.popup__image');
 const placePopupImageCaption = placePhotoPopup.querySelector('.popup__caption');
 
-const places = [
-  {
-    name: 'Карачаевск',
-    link: './assets/images/karachaevsk.jpg'
-  },
-  {
-    name: 'Гора Эльбрус',
-    link: './assets/images/elbrus.jpg'
-  },
-  {
-    name: 'Домбай',
-    link: './assets/images/dombay.jpg'
-  },
-  {
-    name: 'Карачаево-Черкессия',
-    link: './assets/images/karachaevsk.jpg'
-  },
-  {
-    name: 'Гора Эльбрус',
-    link: './assets/images/elbrus.jpg'
-  },
-  {
-    name: 'Домбай',
-    link: './assets/images/dombay.jpg'
-  }
-]
+const validationConfig = {
+  formSelector: '.form',
+  inputSelector: '.form__field',
+  submitButtonSelector: '.form__submit',
+  inactiveButtonClass: 'form__submit_type_disabled',
+  inputErrorClass: 'form__field_type_error',
+  errorClass: 'form__field-error_visible'
+};
+
+forms.forEach(form => {
+  const formValidation = new FormValidator(validationConfig, form);
+
+  formValidation.enableValidation();
+});
+
+
+
+
 
 function setTextValue(item, value) {
   item.textContent = `${value}`;
@@ -102,10 +101,7 @@ function openProfilePopup(e) {
   setUserInfoEditFormFieldValue();
   openPopup(e);
 
-  // временное решение пока не прошли модули
-  const form = e.querySelector('.form');
-  const button = e.querySelector('.form__submit');
-  checkSubmitButtonValidity({ inactiveButtonClass: 'form__submit_type_disabled' }, form, button);
+  // checkSubmitButtonValidity({ inactiveButtonClass: 'form__submit_type_disabled' }, form, button);
 }
 
 function removePlaceItem(e) {
@@ -124,10 +120,7 @@ function openPlacePopup(e) {
 function openAddPlacePopup(e) {
   openPopup(e);
 
-  // временное решение пока не прошли модули
-  const form = e.querySelector('.form');
-  const button = e.querySelector('.form__submit');
-  checkSubmitButtonValidity({ inactiveButtonClass: 'form__submit_type_disabled' }, form, button);
+  // checkSubmitButtonValidity({ inactiveButtonClass: 'form__submit_type_disabled' }, form, button);
 }
 
 function setPlacePopupData(e) {
@@ -162,7 +155,7 @@ placeAddForm.addEventListener('submit', function (e) {
 });
 
 placeAddButton.addEventListener('click', function () {
-  placeAddForm.reset();
+  // placeAddForm.reset();
   openAddPlacePopup(placeAddPopup);
 });
 
