@@ -169,3 +169,6 @@ popups.forEach(popup => {
 setTextValue(userNickname, 'Жак-Ив Кусто');
 setTextValue(userDescription, 'Исследователь океана');
 fillPlaces();
+
+
+console.log(placeAddForm)

@@ -67,6 +67,6 @@ export default class FormValidator {
     });
 
     this._setEventListeners();
-    this._checkSubmitButtonValidity();
+    this.checkSubmitButtonValidity();
   }
 }
