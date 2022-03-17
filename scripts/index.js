@@ -29,18 +29,19 @@ const validationConfig = {
   errorClass: 'form__field-error_visible'
 };
 
-// forms.forEach(form => {
-//   const formValidation = new FormValidator(validationConfig, form);
-//
-//   formValidation.enableValidation();
-// });
+const formValidators = {};
 
-const placeAddFormValidation = new FormValidator(validationConfig, placeAddForm);
-const userInfoEditFormValidation = new FormValidator(validationConfig, userInfoEditForm);
+function enableValidation(config) {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
 
-placeAddFormValidation.enableValidation();
-userInfoEditFormValidation.enableValidation();
+  formList.forEach(formElement => {
+    const validator = new FormValidator(config, formElement);
+    const formName = formElement.getAttribute('id');
 
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+}
 
 function renderCard(data) {
   const placesEl = document.querySelector('.places__list');
@@ -85,7 +86,8 @@ function openProfilePopup(e) {
   setUserInfoEditFormFieldValue();
   openPopup(e);
 
-  userInfoEditFormValidation.checkSubmitButtonValidity();
+  formValidators['user-info-edit-form'].resetErrors();
+  formValidators['user-info-edit-form'].checkSubmitButtonValidity();
 }
 
 function openPlacePopup(e) {
@@ -96,7 +98,8 @@ function openPlacePopup(e) {
 function openAddPlacePopup(e) {
   openPopup(e);
 
-  placeAddFormValidation.checkSubmitButtonValidity();
+  formValidators['place-add-form'].resetErrors();
+  formValidators['place-add-form'].checkSubmitButtonValidity();
 }
 
 function setPlacePopupData(e) {
@@ -131,7 +134,7 @@ placeAddForm.addEventListener('submit', function (e) {
 });
 
 placeAddButton.addEventListener('click', function () {
-  placeAddFormValidation.resetForm();
+  formValidators['place-add-form'].resetForm();
   openAddPlacePopup(placeAddPopup);
 });
 
@@ -145,3 +148,4 @@ popups.forEach(popup => {
 setTextValue(userNickname, 'Жак-Ив Кусто');
 setTextValue(userDescription, 'Исследователь океана');
 fillPlaces();
+enableValidation(validationConfig);

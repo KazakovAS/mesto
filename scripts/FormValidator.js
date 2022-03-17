@@ -58,10 +58,8 @@ export default class FormValidator {
   }
 
   resetErrors() {
-    this.resetForm();
-
     this._fields.forEach(field => {
-      this._checkInputValidity(field);
+      this._hideInputError(field);
     });
 
     this.checkSubmitButtonValidity();
