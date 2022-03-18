@@ -2,7 +2,6 @@ import places from './data.js';
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 
-// const forms = document.querySelectorAll('.form');
 const userNickname = document.querySelector('.user__nickname-text');
 const userDescription = document.querySelector('.user__description');
 const userInfoEditButton = document.querySelector('.user__info-edit-button');
@@ -44,7 +43,7 @@ function enableValidation(config) {
 }
 
 function createCard(data) {
-  const card = new Card(data, '#place-item');
+  const card = new Card(data, '#place-item', handleCardImageClick);
 
   return card;
 }
@@ -96,11 +95,6 @@ function openProfilePopup(e) {
   formValidators['user-info-edit-form'].checkSubmitButtonValidity();
 }
 
-function openPlacePopup(e) {
-  setPlacePopupData(e);
-  openPopup(placePhotoPopup);
-}
-
 function openAddPlacePopup(e) {
   openPopup(e);
 
@@ -108,10 +102,15 @@ function openAddPlacePopup(e) {
   formValidators['place-add-form'].checkSubmitButtonValidity();
 }
 
-function setPlacePopupData(e) {
-  placePopupImage.src = e.target.src;
-  placePopupImage.alt = e.target.alt;
-  placePopupImageCaption.textContent = e.target.alt;
+function handleCardImageClick(title, image) {
+  setPlacePopupData(title, image);
+  openPopup(placePhotoPopup);
+}
+
+function setPlacePopupData(title, image) {
+  placePopupImage.src = image;
+  placePopupImage.alt = title;
+  placePopupImageCaption.textContent = title;
 }
 
 userInfoEditForm.addEventListener('submit', function (e) {

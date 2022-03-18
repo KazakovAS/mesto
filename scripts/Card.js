@@ -1,14 +1,15 @@
 export default class Card {
-  constructor(data, cardSelector) {
+  constructor(data, cardSelector, handleCardImageClick) {
     this._cardTemplate = document.querySelector(cardSelector).content.cloneNode(true);
     this._card = this._cardTemplate.querySelector('.places__item');
-    // this._cardImageEl = this._card.querySelector('.place__image');
+    this._cardImageEl = this._card.querySelector('.place__image');
     this._likeButton = this._card.querySelector('.place__like-button');
     this._cardRemoveButton = this._card.querySelector('.place__remove-button');
     this._title = data.name;
     this._image = data.image;
     this._imageAlt = this._title;
     this._isLiked = false;
+    this._handleCardImageClick = handleCardImageClick;
   }
 
   _fillCard() {
@@ -29,7 +30,9 @@ export default class Card {
       this._removeCard();
     });
 
-    // this._cardImageEl.addEventListener('click', openPlacePopup);
+    this._cardImageEl.addEventListener('click', () => {
+      this._handleCardImageClick(this._title, this._image);
+    });
   }
 
   _removeCard() {
