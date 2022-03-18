@@ -2,7 +2,6 @@ import places from './data.js';
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 
-// const forms = document.querySelectorAll('.form');
 const userNickname = document.querySelector('.user__nickname-text');
 const userDescription = document.querySelector('.user__description');
 const userInfoEditButton = document.querySelector('.user__info-edit-button');
@@ -29,29 +28,36 @@ const validationConfig = {
   errorClass: 'form__field-error_visible'
 };
 
-// forms.forEach(form => {
-//   const formValidation = new FormValidator(validationConfig, form);
-//
-//   formValidation.enableValidation();
-// });
+const formValidators = {};
 
-const placeAddFormValidation = new FormValidator(validationConfig, placeAddForm);
-const userInfoEditFormValidation = new FormValidator(validationConfig, userInfoEditForm);
+function enableValidation(config) {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
 
-placeAddFormValidation.enableValidation();
-userInfoEditFormValidation.enableValidation();
+  formList.forEach(formElement => {
+    const validator = new FormValidator(config, formElement);
+    const formName = formElement.getAttribute('id');
 
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+}
 
-function renderCard(data) {
+function createCard(data) {
+  const card = new Card(data, '#place-item', handleCardImageClick);
+
+  return card;
+}
+
+function renderCard(position, data) {
   const placesEl = document.querySelector('.places__list');
-  const card = new Card(data, '#place-item');
 
-  placesEl.prepend(card.createCard());
+  if (position === 'start') placesEl.prepend(createCard(data).createCard());
+  else placesEl.append(createCard(data).createCard());
 }
 
 function fillPlaces() {
   for (const place of places) {
-    renderCard(place);
+    renderCard('start', place);
   }
 }
 
@@ -85,24 +91,26 @@ function openProfilePopup(e) {
   setUserInfoEditFormFieldValue();
   openPopup(e);
 
-  userInfoEditFormValidation.checkSubmitButtonValidity();
-}
-
-function openPlacePopup(e) {
-  setPlacePopupData(e);
-  openPopup(placePhotoPopup);
+  formValidators['user-info-edit-form'].resetErrors();
+  formValidators['user-info-edit-form'].checkSubmitButtonValidity();
 }
 
 function openAddPlacePopup(e) {
   openPopup(e);
 
-  placeAddFormValidation.checkSubmitButtonValidity();
+  formValidators['place-add-form'].resetErrors();
+  formValidators['place-add-form'].checkSubmitButtonValidity();
 }
 
-function setPlacePopupData(e) {
-  placePopupImage.src = e.target.src;
-  placePopupImage.alt = e.target.alt;
-  placePopupImageCaption.textContent = e.target.alt;
+function handleCardImageClick(title, image) {
+  setPlacePopupData(title, image);
+  openPopup(placePhotoPopup);
+}
+
+function setPlacePopupData(title, image) {
+  placePopupImage.src = image;
+  placePopupImage.alt = title;
+  placePopupImageCaption.textContent = title;
 }
 
 userInfoEditForm.addEventListener('submit', function (e) {
@@ -126,12 +134,12 @@ placeAddForm.addEventListener('submit', function (e) {
     image: placeImageField.value
   }
 
-  renderCard(place);
+  renderCard('start', place);
   closePopup();
 });
 
 placeAddButton.addEventListener('click', function () {
-  placeAddFormValidation.resetForm();
+  formValidators['place-add-form'].resetForm();
   openAddPlacePopup(placeAddPopup);
 });
 
@@ -145,3 +153,4 @@ popups.forEach(popup => {
 setTextValue(userNickname, 'Жак-Ив Кусто');
 setTextValue(userDescription, 'Исследователь океана');
 fillPlaces();
+enableValidation(validationConfig);
