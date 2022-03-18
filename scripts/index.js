@@ -43,16 +43,22 @@ function enableValidation(config) {
   });
 }
 
-function renderCard(data) {
-  const placesEl = document.querySelector('.places__list');
+function createCard(data) {
   const card = new Card(data, '#place-item');
 
-  placesEl.prepend(card.createCard());
+  return card;
+}
+
+function renderCard(position, data) {
+  const placesEl = document.querySelector('.places__list');
+
+  if (position === 'start') placesEl.prepend(createCard(data).createCard());
+  else placesEl.append(createCard(data).createCard());
 }
 
 function fillPlaces() {
   for (const place of places) {
-    renderCard(place);
+    renderCard('start', place);
   }
 }
 
@@ -129,7 +135,7 @@ placeAddForm.addEventListener('submit', function (e) {
     image: placeImageField.value
   }
 
-  renderCard(place);
+  renderCard('start', place);
   closePopup();
 });
 
