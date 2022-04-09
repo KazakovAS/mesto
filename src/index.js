@@ -2,8 +2,7 @@ import './styles/pages/index.css';
 
 import FormValidator from './scripts/FormValidator.js';
 
-const userNickname = document.querySelector('.user__nickname-text');
-const userDescription = document.querySelector('.user__description');
+
 const userInfoEditButton = document.querySelector('.user__info-edit-button');
 const placeAddButton = document.querySelector('.profile__place-add-button');
 const popups = document.querySelectorAll('.popup');
@@ -60,16 +59,28 @@ const placesList = new Section({
 
 placesList.renderItems();
 
+import UserInfo from "./scripts/UserInfo.js";
+import  { userNicknameSelector, userDescriptionSelector } from './scripts/constants.js';
+
+const userInfo = new UserInfo({
+  userNicknameSelector: userNicknameSelector,
+  userDescriptionSelector: userDescriptionSelector
+});
+
+userInfo.setUserInfo({
+  userNickname: 'Жак-Ив Кусто',
+  userDescription: 'Исследователь океана'
+});
 
 
-function setUserInfoEditFormFieldValue() {
-  userNicknameField.value = userNickname.textContent;
-  userDescriptionField.value = userDescription.textContent;
-}
+// function setUserInfoEditFormFieldValue() {
+//   userNicknameField.value = userNickname.textContent;
+//   userDescriptionField.value = userDescription.textContent;
+// }
 
-function setTextValue(item, value) {
-  item.textContent = `${value}`;
-}
+// function setTextValue(item, value) {
+//   item.textContent = `${value}`;
+// }
 
 // function openPopup(popupEl) {
 //   popupEl.classList.add('popup_opened');
@@ -89,7 +100,7 @@ function setTextValue(item, value) {
 // }
 
 function openProfilePopup(e) {
-  setUserInfoEditFormFieldValue();
+  // setUserInfoEditFormFieldValue();
   // openPopup(e);
 
   formValidators['user-info-edit-form'].resetErrors();
@@ -117,8 +128,8 @@ function setPlacePopupData(title, image) {
 userInfoEditForm.addEventListener('submit', function (e) {
   e.preventDefault();
 
-  setTextValue(userNickname, userNicknameField.value);
-  setTextValue(userDescription, userDescriptionField.value);
+  // setTextValue(userNickname, userNicknameField.value);
+  // setTextValue(userDescription, userDescriptionField.value);
 
   // closePopup();
 });
@@ -152,7 +163,7 @@ popups.forEach(popup => {
 
 })
 
-setTextValue(userNickname, 'Жак-Ив Кусто');
-setTextValue(userDescription, 'Исследователь океана');
+// setTextValue(userNickname, 'Жак-Ив Кусто');
+// setTextValue(userDescription, 'Исследователь океана');
 enableValidation(validationConfig);
 
