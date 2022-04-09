@@ -42,25 +42,6 @@ function enableValidation(config) {
   });
 }
 
-// function createCard(data) {
-//   const card = new Card(data, '#place-item', handleCardImageClick);
-//
-//   return card;
-// }
-//
-// function renderCard(position, data) {
-//   const placesEl = document.querySelector('.places__list');
-//
-//   if (position === 'start') placesEl.prepend(createCard(data).createCard());
-//   else placesEl.append(createCard(data).createCard());
-// }
-//
-// function fillPlaces() {
-//   for (const place of places) {
-//     renderCard('start', place);
-//   }
-// }
-
 
 
 import Section from './scripts/Section.js';
@@ -73,7 +54,7 @@ const placesList = new Section({
   renderer: item => {
     const card = new Card(item, '#place-item', handleCardImageClick);
     const cardElement = card.createCard();
-    placesList.addItem(cardElement);
+    placesList.addItem(cardElement, 'start');
   }
 }, placesListSelector);
 
@@ -90,33 +71,33 @@ function setTextValue(item, value) {
   item.textContent = `${value}`;
 }
 
-function openPopup(popupEl) {
-  popupEl.classList.add('popup_opened');
+// function openPopup(popupEl) {
+//   popupEl.classList.add('popup_opened');
+//
+//   document.addEventListener('keydown', closePopupByEscape);
+// }
 
-  document.addEventListener('keydown', closePopupByEscape);
-}
+// function closePopup() {
+//   const popup = document.querySelector('.popup_opened');
+//
+//   popup.classList.remove('popup_opened');
+//   document.removeEventListener('keydown', closePopupByEscape);
+// }
 
-function closePopup() {
-  const popup = document.querySelector('.popup_opened');
-
-  popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closePopupByEscape);
-}
-
-function closePopupByEscape(e) {
-  if (e.key === 'Escape') closePopup();
-}
+// function closePopupByEscape(e) {
+//   if (e.key === 'Escape') closePopup();
+// }
 
 function openProfilePopup(e) {
   setUserInfoEditFormFieldValue();
-  openPopup(e);
+  // openPopup(e);
 
   formValidators['user-info-edit-form'].resetErrors();
   formValidators['user-info-edit-form'].checkSubmitButtonValidity();
 }
 
 function openAddPlacePopup(e) {
-  openPopup(e);
+  // openPopup(e);
 
   formValidators['place-add-form'].resetErrors();
   formValidators['place-add-form'].checkSubmitButtonValidity();
@@ -124,7 +105,7 @@ function openAddPlacePopup(e) {
 
 function handleCardImageClick(title, image) {
   setPlacePopupData(title, image);
-  openPopup(placePhotoPopup);
+  // openPopup(placePhotoPopup);
 }
 
 function setPlacePopupData(title, image) {
@@ -139,7 +120,7 @@ userInfoEditForm.addEventListener('submit', function (e) {
   setTextValue(userNickname, userNicknameField.value);
   setTextValue(userDescription, userDescriptionField.value);
 
-  closePopup();
+  // closePopup();
 });
 
 userInfoEditButton.addEventListener('click', function () {
@@ -155,7 +136,7 @@ placeAddForm.addEventListener('submit', function (e) {
   }
 
   // renderCard('start', place);
-  closePopup();
+  // closePopup();
 });
 
 placeAddButton.addEventListener('click', function () {
@@ -164,14 +145,14 @@ placeAddButton.addEventListener('click', function () {
 });
 
 popups.forEach(popup => {
-  popup.addEventListener('click', function (e) {
-    if (e.target === popup) closePopup();
-    if (e.target.classList.contains('popup__close-button')) closePopup();
-  });
+  // popup.addEventListener('click', function (e) {
+  //   // if (e.target === popup) closePopup();
+  //   // if (e.target.classList.contains('popup__close-button')) closePopup();
+  // });
+
 })
 
 setTextValue(userNickname, 'Жак-Ив Кусто');
 setTextValue(userDescription, 'Исследователь океана');
-// fillPlaces();
 enableValidation(validationConfig);
 
