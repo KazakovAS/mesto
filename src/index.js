@@ -1,7 +1,5 @@
 import './styles/pages/index.css';
 
-import places from './scripts/data.js';
-import Card from './scripts/Card.js';
 import FormValidator from './scripts/FormValidator.js';
 
 const userNickname = document.querySelector('.user__nickname-text');
@@ -44,24 +42,44 @@ function enableValidation(config) {
   });
 }
 
-function createCard(data) {
-  const card = new Card(data, '#place-item', handleCardImageClick);
+// function createCard(data) {
+//   const card = new Card(data, '#place-item', handleCardImageClick);
+//
+//   return card;
+// }
+//
+// function renderCard(position, data) {
+//   const placesEl = document.querySelector('.places__list');
+//
+//   if (position === 'start') placesEl.prepend(createCard(data).createCard());
+//   else placesEl.append(createCard(data).createCard());
+// }
+//
+// function fillPlaces() {
+//   for (const place of places) {
+//     renderCard('start', place);
+//   }
+// }
 
-  return card;
-}
 
-function renderCard(position, data) {
-  const placesEl = document.querySelector('.places__list');
 
-  if (position === 'start') placesEl.prepend(createCard(data).createCard());
-  else placesEl.append(createCard(data).createCard());
-}
+import Section from './scripts/Section.js';
+import Card from './scripts/Card.js';
+import places from './scripts/places.js';
+import { placesListSelector } from "./scripts/constants.js";
 
-function fillPlaces() {
-  for (const place of places) {
-    renderCard('start', place);
+const placesList = new Section({
+  items: places,
+  renderer: item => {
+    const card = new Card(item, '#place-item', handleCardImageClick);
+    const cardElement = card.createCard();
+    placesList.addItem(cardElement);
   }
-}
+}, placesListSelector);
+
+placesList.renderItems();
+
+
 
 function setUserInfoEditFormFieldValue() {
   userNicknameField.value = userNickname.textContent;
@@ -136,7 +154,7 @@ placeAddForm.addEventListener('submit', function (e) {
     image: placeImageField.value
   }
 
-  renderCard('start', place);
+  // renderCard('start', place);
   closePopup();
 });
 
@@ -154,6 +172,6 @@ popups.forEach(popup => {
 
 setTextValue(userNickname, 'Жак-Ив Кусто');
 setTextValue(userDescription, 'Исследователь океана');
-fillPlaces();
+// fillPlaces();
 enableValidation(validationConfig);
 
