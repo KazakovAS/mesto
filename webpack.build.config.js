@@ -1,5 +1,5 @@
 const { merge } = require('webpack-merge');
-const baseWebpackConfig = require('./webpack.base.config.js');
+const baseWebpackConfig = require('./webpack.config.js');
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 
 const buildWebpackConfig = merge(baseWebpackConfig, {
