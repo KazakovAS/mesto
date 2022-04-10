@@ -6,8 +6,8 @@ export const userInfoEditPopupSelector = '#user-info-edit-popup';
 export const placeAddPopupSelector = '#place-add-popup';
 
 export const userInfoEditButton = document.querySelector('.user__info-edit-button');
-export const userNicknameField = document.getElementsByName('user-nickname')[0];
-export const userDescriptionField = document.getElementsByName('user-description')[0];
+// export const userNicknameField = document.getElementsByName('user-nickname')[0];
+// export const userDescriptionField = document.getElementsByName('user-description')[0];
 export const placeAddButton = document.querySelector('.profile__place-add-button');
 
 const karachaevskImage = new URL('../../assets/images/karachaevsk.jpg', import.meta.url);

@@ -14,8 +14,6 @@ import {
   userNicknameSelector,
   userDescriptionSelector,
   userInfoEditButton,
-  userNicknameField,
-  userDescriptionField,
   placesListSelector,
   placePhotoPopupSelector,
   placeAddPopupSelector,
@@ -91,9 +89,10 @@ placeAddPopup.setEventListeners();
 userInfoEditButton.addEventListener('click', function () {
   const { userNickname, userDescription } = userInfo.getUserInfo();
 
-  userNicknameField.value = userNickname;
-  userDescriptionField.value = userDescription;
-
+  userInfoEditPopup.setInputValues({
+    'user-nickname': userNickname,
+    'user-description': userDescription
+  });
 
   formValidators['user-info-edit-form'].resetErrors();
 
