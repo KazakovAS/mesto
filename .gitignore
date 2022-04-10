@@ -1,0 +1,10 @@
+# Default
+.idea
+.vscode
+.DS_Store
+
+# Node
+node_modules
+
+# Build & test
+build
