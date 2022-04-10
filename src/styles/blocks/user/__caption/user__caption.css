@@ -1,14 +1,10 @@
 .user__caption {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   margin-top: 26px;
 }
 
 @media (min-width: 1280px) {
   .user__caption {
     max-width: 75%;
-    align-items: flex-start;
     margin-top: initial;
     margin-left: 30px;
   }

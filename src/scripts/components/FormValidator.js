@@ -24,14 +24,14 @@ export default class FormValidator {
   }
 
   _hideInputError(field) {
-    const errorMessage = this._form.querySelector(`#error-${field.id}`);
+    const errorMessage = this._form.querySelector(`#error-${field.name}`);
 
     field.classList.remove(this._settings.inputErrorClass);
     errorMessage.classList.remove(this._settings.errorClass);
   }
 
   _showInputError(field) {
-    const errorMessage = this._form.querySelector(`#error-${field.id}`);
+    const errorMessage = this._form.querySelector(`#error-${field.name}`);
 
     field.classList.add(this._settings.inputErrorClass);
 
@@ -63,10 +63,6 @@ export default class FormValidator {
     });
 
     this.checkSubmitButtonValidity();
-  }
-
-  resetForm() {
-    this._form.reset();
   }
 
   enableValidation() {

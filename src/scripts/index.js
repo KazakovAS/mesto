@@ -1,15 +1,26 @@
 import '../styles/pages/index.css';
 
 import FormValidator from './components/FormValidator.js';
+import Section from './components/Section.js';
+import Card from './components/Card.js';
+import PopupWithImage from "./components/PopupWithImage.js";
+import UserInfo from "./components/UserInfo.js";
+import PopupWithForm from "./components/PopupWithForm";
 
+import places from './places.js';
+import {
+  userInfoEditPopupSelector,
+  userNicknameSelector,
+  userDescriptionSelector,
+  userInfoEditButton,
+  userNicknameField,
+  userDescriptionField,
+  placesListSelector,
+  placePhotoPopupSelector,
+  placeAddPopupSelector,
+  placeAddButton
+} from "./constants.js";
 
-const userInfoEditButton = document.querySelector('.user__info-edit-button');
-const placeAddButton = document.querySelector('.profile__place-add-button');
-const popups = document.querySelectorAll('.popup');
-const placeAddPopup = document.querySelector('#place-add-popup');
-const placeAddForm = placeAddPopup.querySelector('#place-add-form');
-const placeNameField = placeAddForm.querySelector('#place-name-field');
-const placeImageField = placeAddForm.querySelector('#place-image-field');
 
 const validationConfig = {
   formSelector: '.form',
@@ -34,8 +45,6 @@ function enableValidation(config) {
   });
 }
 
-
-
 function createCard(data) {
   const card = new Card(data, '#place-item', handleCardImageClick);
 
@@ -48,127 +57,70 @@ function renderCard(data, container) {
   container.prepend(card);
 }
 
-
-
-import Section from './components/Section.js';
-import Card from './components/Card.js';
-import places from './places.js';
-import { placesListSelector } from "./constants.js";
-
-const placesList = new Section({
-  items: places,
-  renderer: renderCard
-}, placesListSelector);
-
-placesList.renderItems();
-
-
-
-import UserInfo from "./components/UserInfo.js";
-import  { userNicknameSelector, userDescriptionSelector } from './constants.js';
-
-const userInfo = new UserInfo({
-  userNicknameSelector: userNicknameSelector,
-  userDescriptionSelector: userDescriptionSelector
-});
-
-userInfo.setUserInfo({
-  userNickname: 'Жак-Ив Кусто',
-  userDescription: 'Исследователь океана'
-});
-
-
-
-import PopupWithImage from "./components/PopupWithImage.js";
-const placePhotoPopupSelector = '#place-photo-popup';
-
-const placePhotoPopup = new PopupWithImage(placePhotoPopupSelector);
-placePhotoPopup.setEventListeners();
-
 function handleCardImageClick(image, title) {
   placePhotoPopup.open(image, title);
 }
 
-
-
-import PopupWithForm from "./components/PopupWithForm";
-
-const userInfoEditPopupSelector = '#user-info-edit-popup';
-
-const userInfoEditPopup = new PopupWithForm(userInfoEditPopupSelector, handleSubmitForm);
-
-userInfoEditPopup.setEventListeners();
-userInfoEditButton.addEventListener('click', function () {
-  userInfoEditPopup.open();
-});
-
-function handleSubmitForm(e) {
-  e.preventDefault();
-
+function handleUserInfoEditFormSubmit(data) {
   userInfo.setUserInfo({
-    userNickname: 'Жак-Ив Кусто',
-    userDescription: 'Исследователь океана'
+    userNickname: data['user-nickname'],
+    userDescription: data['user-description'],
   });
 
   userInfoEditPopup.close();
 }
 
+function handlePlaceAddFormSubmit(data) {
+  const card = createCard({
+    name: data['place-name'],
+    image: data['place-image']
+  });
 
+  placesList.addItem(card);
+  placeAddPopup.close();
+}
 
+const placesList = new Section({
+  items: places,
+  renderer: renderCard
+}, placesListSelector);
+placesList.renderItems();
 
+const placePhotoPopup = new PopupWithImage(placePhotoPopupSelector);
+placePhotoPopup.setEventListeners();
 
+const userInfo = new UserInfo({
+  userNicknameSelector: userNicknameSelector,
+  userDescriptionSelector: userDescriptionSelector
+});
+userInfo.setUserInfo({
+  userNickname: 'Жак-Ив Кусто',
+  userDescription: 'Исследователь океана'
+});
 
-function openProfilePopup(e) {
-  // setUserInfoEditFormFieldValue();
-  // openPopup(e);
+const userInfoEditPopup = new PopupWithForm(userInfoEditPopupSelector, handleUserInfoEditFormSubmit);
+userInfoEditPopup.setEventListeners();
+
+const placeAddPopup = new PopupWithForm(placeAddPopupSelector, handlePlaceAddFormSubmit);
+placeAddPopup.setEventListeners();
+
+userInfoEditButton.addEventListener('click', function () {
+  const { userNickname, userDescription } = userInfo.getUserInfo();
+
+  userNicknameField.value = userNickname;
+  userDescriptionField.value = userDescription;
 
   formValidators['user-info-edit-form'].resetErrors();
   formValidators['user-info-edit-form'].checkSubmitButtonValidity();
-}
 
-function openAddPlacePopup(e) {
-  // openPopup(e);
+  userInfoEditPopup.open();
+});
 
+placeAddButton.addEventListener('click', function()  {
   formValidators['place-add-form'].resetErrors();
   formValidators['place-add-form'].checkSubmitButtonValidity();
-}
 
-// function setPlacePopupData(title, image) {
-//   placePopupImage.src = image;
-//   placePopupImage.alt = title;
-//   placePopupImageCaption.textContent = title;
-// }
-
-// userInfoEditForm.addEventListener('submit', function (e) {
-//   e.preventDefault();
-//
-//   // setTextValue(userNickname, userNicknameField.value);
-//   // setTextValue(userDescription, userDescriptionField.value);
-//
-//   // closePopup();
-// });
-
-
-placeAddForm.addEventListener('submit', function (e) {
-  e.preventDefault();
-
-  const place = {
-    name: placeNameField.value,
-    image: placeImageField.value
-  }
-
-  // renderCard('start', place);
-  // closePopup();
+  placeAddPopup.open();
 });
-
-placeAddButton.addEventListener('click', function () {
-  formValidators['place-add-form'].resetForm();
-  openAddPlacePopup(placeAddPopup);
-});
-
-popups.forEach(popup => {
-
-})
 
 enableValidation(validationConfig);
-
