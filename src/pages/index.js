@@ -1,35 +1,24 @@
-import '../styles/pages/index.css';
+import './index.css';
 
-import FormValidator from './components/FormValidator.js';
-import Section from './components/Section.js';
-import Card from './components/Card.js';
-import PopupWithImage from "./components/PopupWithImage.js";
-import UserInfo from "./components/UserInfo.js";
-import PopupWithForm from "./components/PopupWithForm";
+import FormValidator from '../scripts/components/FormValidator.js';
+import Section from '../scripts/components/Section.js';
+import Card from '../scripts/components/Card.js';
+import PopupWithImage from "../scripts/components/PopupWithImage.js";
+import UserInfo from "../scripts/components/UserInfo.js";
+import PopupWithForm from "../scripts/components/PopupWithForm";
 
-import places from './places.js';
 import {
+  places,
+  validationConfig,
   userInfoEditPopupSelector,
   userNicknameSelector,
   userDescriptionSelector,
   userInfoEditButton,
-  userNicknameField,
-  userDescriptionField,
   placesListSelector,
   placePhotoPopupSelector,
   placeAddPopupSelector,
   placeAddButton
-} from "./constants.js";
-
-
-const validationConfig = {
-  formSelector: '.form',
-  inputSelector: '.form__field',
-  submitButtonSelector: '.form__submit',
-  inactiveButtonClass: 'form__submit_type_disabled',
-  inputErrorClass: 'form__field_type_error',
-  errorClass: 'form__field-error_visible'
-};
+} from "../scripts/utils/constants.js";
 
 const formValidators = {};
 
@@ -45,16 +34,10 @@ function enableValidation(config) {
   });
 }
 
-function createCard(data) {
+function renderCard(data) {
   const card = new Card(data, '#place-item', handleCardImageClick);
 
   return card.createCard();
-}
-
-function renderCard(data, container) {
-  const card = createCard(data);
-
-  container.prepend(card);
 }
 
 function handleCardImageClick(image, title) {
@@ -71,12 +54,11 @@ function handleUserInfoEditFormSubmit(data) {
 }
 
 function handlePlaceAddFormSubmit(data) {
-  const card = createCard({
+  placesList.addItem({
     name: data['place-name'],
     image: data['place-image']
   });
 
-  placesList.addItem(card);
   placeAddPopup.close();
 }
 
@@ -107,18 +89,18 @@ placeAddPopup.setEventListeners();
 userInfoEditButton.addEventListener('click', function () {
   const { userNickname, userDescription } = userInfo.getUserInfo();
 
-  userNicknameField.value = userNickname;
-  userDescriptionField.value = userDescription;
+  userInfoEditPopup.setInputValues({
+    'user-nickname': userNickname,
+    'user-description': userDescription
+  });
 
   formValidators['user-info-edit-form'].resetErrors();
-  formValidators['user-info-edit-form'].checkSubmitButtonValidity();
 
   userInfoEditPopup.open();
 });
 
 placeAddButton.addEventListener('click', function()  {
   formValidators['place-add-form'].resetErrors();
-  formValidators['place-add-form'].checkSubmitButtonValidity();
 
   placeAddPopup.open();
 });

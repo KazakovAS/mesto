@@ -3,6 +3,7 @@ export default class Card {
     this._cardTemplate = document.querySelector(cardSelector).content.cloneNode(true);
     this._card = this._cardTemplate.querySelector('.places__item');
     this._cardImageEl = this._card.querySelector('.place__image');
+    this._cardCaptionEl = this._card.querySelector('.place__name');
     this._likeButton = this._card.querySelector('.place__like-button');
     this._cardRemoveButton = this._card.querySelector('.place__remove-button');
     this._title = data.name;
@@ -13,12 +14,9 @@ export default class Card {
   }
 
   _fillCard() {
-    const cardImage = this._card.querySelector('.place__image');
-    const cardTitle = this._card.querySelector('.place__name');
-
-    cardTitle.textContent = this._title;
-    cardImage.src = this._image;
-    cardImage.alt = this._imageAlt;
+    this._cardCaptionEl.textContent = this._title;
+    this._cardImageEl.src = this._image;
+    this._cardImageEl.alt = this._imageAlt;
   }
 
   _setEventListeners() {
