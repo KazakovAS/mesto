@@ -1,16 +1,17 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 
 module.exports = {
   entry: {
-    main: './src/scripts/index.js'
+    main: path.resolve(__dirname, './src/scripts/index.js')
   },
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'main.js',
+    filename: '[name].[chunkhash].js',
     publicPath: '',
+    clean: true,
+    assetModuleFilename: '[name].[contenthash][ext]'
   },
   mode: 'development',
   devServer: {
@@ -25,8 +26,14 @@ module.exports = {
         warnings: false,
       },
     },
+    hot: true,
     compress: true,
     historyApiFallback: true
+  },
+  devtool: 'eval-cheap-module-source-map',
+  watch: true,
+  watchOptions: {
+    aggregateTimeout: 100,
   },
   module: {
     rules: [
@@ -50,17 +57,14 @@ module.exports = {
           {
             loader: "css-loader",
             options: {
-              sourceMap: true,
+              // sourceMap: true,
               importLoaders: 1
             }
           },
           {
             loader: "postcss-loader",
             options: {
-              sourceMap: true,
-              postcssOptions: {
-                config: path.resolve(__dirname, "postcss.config.js"),
-              }
+              // sourceMap: true,
             }
           }
         ]
@@ -102,7 +106,5 @@ module.exports = {
     //       filename: `./${page}`,
     //     }),
     // ),
-
-    new CleanWebpackPlugin()
   ]
 }
