@@ -22,9 +22,6 @@ import {
   placeAddButton
 } from "../scripts/utils/constants.js";
 
-
-
-
 const formValidators = {};
 
 function enableValidation(config) {
@@ -39,16 +36,10 @@ function enableValidation(config) {
   });
 }
 
-function createCard(data) {
+function renderCard(data) {
   const card = new Card(data, '#place-item', handleCardImageClick);
 
   return card.createCard();
-}
-
-function renderCard(data, container) {
-  const card = createCard(data);
-
-  container.prepend(card);
 }
 
 function handleCardImageClick(image, title) {
@@ -65,12 +56,11 @@ function handleUserInfoEditFormSubmit(data) {
 }
 
 function handlePlaceAddFormSubmit(data) {
-  const card = createCard({
+  placesList.addItem({
     name: data['place-name'],
     image: data['place-image']
   });
 
-  placesList.addItem(card);
   placeAddPopup.close();
 }
 
