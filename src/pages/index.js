@@ -1,14 +1,15 @@
-import '../styles/pages/index.css';
+import './index.css';
 
-import FormValidator from './components/FormValidator.js';
-import Section from './components/Section.js';
-import Card from './components/Card.js';
-import PopupWithImage from "./components/PopupWithImage.js";
-import UserInfo from "./components/UserInfo.js";
-import PopupWithForm from "./components/PopupWithForm";
+import FormValidator from '../scripts/components/FormValidator.js';
+import Section from '../scripts/components/Section.js';
+import Card from '../scripts/components/Card.js';
+import PopupWithImage from "../scripts/components/PopupWithImage.js";
+import UserInfo from "../scripts/components/UserInfo.js";
+import PopupWithForm from "../scripts/components/PopupWithForm";
 
-import places from './places.js';
 import {
+  places,
+  validationConfig,
   userInfoEditPopupSelector,
   userNicknameSelector,
   userDescriptionSelector,
@@ -19,17 +20,10 @@ import {
   placePhotoPopupSelector,
   placeAddPopupSelector,
   placeAddButton
-} from "./constants.js";
+} from "../scripts/utils/constants.js";
 
 
-const validationConfig = {
-  formSelector: '.form',
-  inputSelector: '.form__field',
-  submitButtonSelector: '.form__submit',
-  inactiveButtonClass: 'form__submit_type_disabled',
-  inputErrorClass: 'form__field_type_error',
-  errorClass: 'form__field-error_visible'
-};
+
 
 const formValidators = {};
 
@@ -110,15 +104,14 @@ userInfoEditButton.addEventListener('click', function () {
   userNicknameField.value = userNickname;
   userDescriptionField.value = userDescription;
 
+
   formValidators['user-info-edit-form'].resetErrors();
-  formValidators['user-info-edit-form'].checkSubmitButtonValidity();
 
   userInfoEditPopup.open();
 });
 
 placeAddButton.addEventListener('click', function()  {
   formValidators['place-add-form'].resetErrors();
-  formValidators['place-add-form'].checkSubmitButtonValidity();
 
   placeAddPopup.open();
 });
