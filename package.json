@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "webpack serve --config webpack.dev.config.js",
     "build": "webpack --config webpack.build.config.js",
-    "deploy": "npm run build && gh-pages -d build"
+    "deploy": "npm run build && gh-pages -t true -d build"
   },
   "author": "kazakov_al",
   "devDependencies": {
