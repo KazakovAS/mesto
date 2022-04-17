@@ -7,6 +7,26 @@ import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import UserInfo from "../scripts/components/UserInfo.js";
 import PopupWithForm from "../scripts/components/PopupWithForm";
 
+import { api } from "../scripts/components/Api";
+api.getProfile()
+  .then(res => {
+    userInfo.setUserInfo({
+      name: res.name,
+      about: res.about
+    });
+  })
+
+api.getInitialCards()
+  .then(items => {
+    items.forEach(data => {
+      placesList.addItem({
+        name: data.name,
+        image: data.link
+      });
+    })
+  })
+
+
 import {
   places,
   validationConfig,
@@ -45,12 +65,19 @@ function handleCardImageClick(image, title) {
 }
 
 function handleUserInfoEditFormSubmit(data) {
-  userInfo.setUserInfo({
-    userNickname: data['user-nickname'],
-    userDescription: data['user-description'],
-  });
-
-  userInfoEditPopup.close();
+  api.editProfile({
+    name: data['user-nickname'],
+    about: data['user-description'],
+  })
+    .then(() => {
+      userInfo.setUserInfo({
+        name: data['user-nickname'],
+        about: data['user-description'],
+      });
+    })
+    .finally(() => {
+      userInfoEditPopup.close();
+    })
 }
 
 function handlePlaceAddFormSubmit(data) {
@@ -63,7 +90,7 @@ function handlePlaceAddFormSubmit(data) {
 }
 
 const placesList = new Section({
-  items: places,
+  items: [],
   renderer: renderCard
 }, placesListSelector);
 placesList.renderItems();
@@ -75,10 +102,7 @@ const userInfo = new UserInfo({
   userNicknameSelector: userNicknameSelector,
   userDescriptionSelector: userDescriptionSelector
 });
-userInfo.setUserInfo({
-  userNickname: 'Жак-Ив Кусто',
-  userDescription: 'Исследователь океана'
-});
+
 
 const userInfoEditPopup = new PopupWithForm(userInfoEditPopupSelector, handleUserInfoEditFormSubmit);
 userInfoEditPopup.setEventListeners();
@@ -87,11 +111,11 @@ const placeAddPopup = new PopupWithForm(placeAddPopupSelector, handlePlaceAddFor
 placeAddPopup.setEventListeners();
 
 userInfoEditButton.addEventListener('click', function () {
-  const { userNickname, userDescription } = userInfo.getUserInfo();
+  const { name, about } = userInfo.getUserInfo();
 
   userInfoEditPopup.setInputValues({
-    'user-nickname': userNickname,
-    'user-description': userDescription
+    'user-nickname': name,
+    'user-description': about
   });
 
   formValidators['user-info-edit-form'].resetErrors();
