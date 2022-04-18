@@ -179,6 +179,28 @@
       </section>
 
       <section
+        class="popup"
+        id="place-delete-popup"
+        role="dialog"
+      >
+        <div class="popup__container">
+          <button
+            class="popup__close-button"
+            aria-label="Закрыть окно"
+            type="button"
+          >
+          </button>
+
+          <form class="form" id="place-delete-form" action="" method="POST" novalidate>
+            <h2 class="form__title">
+              Вы уверены?
+            </h2>
+            <button class="form__submit">Да</button>
+          </form>
+        </div>
+      </section>
+
+      <section
         class="popup popup_backdrop_black"
         id="place-photo-popup"
         role="dialog"
@@ -224,6 +246,7 @@
               aria-label="Нравится"
             >
             </button>
+            <span class="place__like-count"></span>
           </div>
         </article>
       </li>
