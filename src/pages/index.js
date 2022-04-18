@@ -106,18 +106,23 @@ function handleUserInfoEditFormSubmit(data) {
   const name = data['user-nickname'];
   const about = data['user-description'];
 
+  userInfoEditPopup.setSubmitButtonText('Сохранение...');
+
   api.editProfile(name, about)
     .then(() => {
       userInfo.setUserInfo({ name, about });
     })
     .finally(() => {
       userInfoEditPopup.close();
+      userInfoEditPopup.setSubmitButtonText('Сохранить');
     })
 }
 
 function handlePlaceAddFormSubmit(data) {
   const name = data['place-name'];
   const link = data['place-image'];
+
+  placeAddPopup.setSubmitButtonText('Сохранение...');
 
   api.addCard(name, link)
     .then((res) => {
@@ -132,19 +137,22 @@ function handlePlaceAddFormSubmit(data) {
     })
     .finally(() => {
       placeAddPopup.close();
+      placeAddPopup.setSubmitButtonText('Сохранить');
     })
 }
 
 function handleAvatarEditFormSubmit(data) {
   const avatar = data['avatar-image'];
 
+  avatarEditPopup.setSubmitButtonText('Сохранение...');
+
   api.editAvatar(avatar)
     .then((res) => {
-      console.log(res)
       userInfo.setAvatar(res.avatar);
     })
     .finally(() => {
       avatarEditPopup.close();
+      avatarEditPopup.setSubmitButtonText('Сохранить');
     })
 }
 
