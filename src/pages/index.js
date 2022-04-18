@@ -9,15 +9,18 @@ import PopupWithForm from "../scripts/components/PopupWithForm";
 import { api } from "../scripts/components/Api";
 import {
   validationConfig,
+  avatarEditPopupSelector,
   userInfoEditPopupSelector,
   userNicknameSelector,
   userDescriptionSelector,
+  userAvatarSelector,
   userInfoEditButton,
   placesListSelector,
   placePhotoPopupSelector,
   placeAddPopupSelector,
   placeDeletePopupSelector,
-  placeAddButton
+  placeAddButton,
+  userAvatarEditButton
 } from "../scripts/utils/constants.js";
 
 const formValidators = {};
@@ -27,7 +30,8 @@ api.getProfile()
   .then(res => {
     userInfo.setUserInfo({
       name: res.name,
-      about: res.about
+      about: res.about,
+      avatar: res.avatar
     });
 
     userId = res._id;
@@ -117,7 +121,6 @@ function handlePlaceAddFormSubmit(data) {
 
   api.addCard(name, link)
     .then((res) => {
-      console.log(res)
       placesList.addItem({
         name: res.name,
         link: res.link,
@@ -132,6 +135,19 @@ function handlePlaceAddFormSubmit(data) {
     })
 }
 
+function handleAvatarEditFormSubmit(data) {
+  const avatar = data['avatar-image'];
+
+  api.editAvatar(avatar)
+    .then((res) => {
+      console.log(res)
+      userInfo.setAvatar(res.avatar);
+    })
+    .finally(() => {
+      avatarEditPopup.close();
+    })
+}
+
 const placesList = new Section({
   items: [],
   renderer: renderCard
@@ -143,7 +159,8 @@ placePhotoPopup.setEventListeners();
 
 const userInfo = new UserInfo({
   userNicknameSelector: userNicknameSelector,
-  userDescriptionSelector: userDescriptionSelector
+  userDescriptionSelector: userDescriptionSelector,
+  userAvatarSelector: userAvatarSelector
 });
 
 const userInfoEditPopup = new PopupWithForm(userInfoEditPopupSelector, handleUserInfoEditFormSubmit);
@@ -154,6 +171,9 @@ placeAddPopup.setEventListeners();
 
 const placeDeletePopup = new PopupWithForm(placeDeletePopupSelector);
 placeDeletePopup.setEventListeners();
+
+const avatarEditPopup = new PopupWithForm(avatarEditPopupSelector, handleAvatarEditFormSubmit);
+avatarEditPopup.setEventListeners();
 
 userInfoEditButton.addEventListener('click', function () {
   const { name, about } = userInfo.getUserInfo();
@@ -173,5 +193,9 @@ placeAddButton.addEventListener('click', function()  {
 
   placeAddPopup.open();
 });
+
+userAvatarEditButton.addEventListener('click', function() {
+  avatarEditPopup.open();
+})
 
 enableValidation(validationConfig);
