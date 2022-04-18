@@ -1,7 +1,12 @@
 .user__avatar {
-  flex-shrink: 0;
   height: 120px;
   width: 120px;
-  object-fit: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  flex-shrink: 0;
   border-radius: 50%;
+  overflow: hidden;
+  line-height: 0;
 }

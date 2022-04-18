@@ -48,11 +48,19 @@
       <main class="content">
         <section class="profile">
           <figure class="user">
-            <img
-              class="user__avatar"
-              src="<%=require('../assets/images/avatar.jpg')%>"
-              alt="Аватар пользователя"
-            >
+            <div class="user__avatar">
+              <img
+                class="user__avatar-image"
+                src="<%=require('../assets/images/avatar.jpg')%>"
+                alt="Аватар пользователя"
+              >
+              <button
+                class="user__avatar-edit-button"
+                aria-label="Редактировать картинку профиля"
+              >
+              </button>
+            </div>
+
             <figcaption class="user__caption">
               <div class="user__nickname">
                 <h1 class="user__nickname-text"></h1>
@@ -179,6 +187,62 @@
       </section>
 
       <section
+        class="popup"
+        id="place-delete-popup"
+        role="dialog"
+      >
+        <div class="popup__container">
+          <button
+            class="popup__close-button"
+            aria-label="Закрыть окно"
+            type="button"
+          >
+          </button>
+
+          <form class="form" id="place-delete-form" action="" method="POST" novalidate>
+            <h2 class="form__title">
+              Вы уверены?
+            </h2>
+            <button class="form__submit">Да</button>
+          </form>
+        </div>
+      </section>
+
+      <section
+        class="popup"
+        id="avatar-edit-popup"
+        role="dialog"
+      >
+        <div class="popup__container">
+          <button
+            class="popup__close-button"
+            aria-label="Закрыть окно"
+            type="button"
+          >
+          </button>
+
+          <form class="form" id="avatar-edit-form" action="" method="POST" novalidate>
+            <h2 class="form__title">
+              Обновить аватар
+            </h2>
+
+            <label class="form__item">
+              <input
+                class="form__field"
+                type="url"
+                name="avatar-image"
+                placeholder="Ссылка на картинку"
+                required
+              >
+              <span class="form__field-error" id="error-avatar-image"></span>
+            </label>
+
+            <button class="form__submit">Сохранить</button>
+          </form>
+        </div>
+      </section>
+
+      <section
         class="popup popup_backdrop_black"
         id="place-photo-popup"
         role="dialog"
@@ -223,6 +287,7 @@
               class="place__like-button"
               aria-label="Нравится"
             >
+              <span class="place__like-count"></span>
             </button>
           </div>
         </article>

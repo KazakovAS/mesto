@@ -1,6 +1,8 @@
 const { merge } = require('webpack-merge');
+const path = require('path');
 const baseWebpackConfig = require('./webpack.config.js');
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 const buildWebpackConfig = merge(baseWebpackConfig, {
   mode: 'production',
@@ -42,7 +44,18 @@ const buildWebpackConfig = merge(baseWebpackConfig, {
         }
       })
     ]
-  }
+  },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, ".nojekyll"),
+          to: path.resolve(__dirname, "build"),
+        },
+
+      ],
+    }),
+  ],
 });
 
 module.exports = new Promise((resolve, reject) => {
