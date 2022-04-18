@@ -48,11 +48,19 @@
       <main class="content">
         <section class="profile">
           <figure class="user">
-            <img
-              class="user__avatar"
-              src="<%=require('../assets/images/avatar.jpg')%>"
-              alt="Аватар пользователя"
-            >
+            <div class="user__avatar">
+              <img
+                class="user__avatar-image"
+                src="<%=require('../assets/images/avatar.jpg')%>"
+                alt="Аватар пользователя"
+              >
+              <button
+                class="user__avatar-edit-button"
+                aria-label="Редактировать картинку профиля"
+              >
+              </button>
+            </div>
+
             <figcaption class="user__caption">
               <div class="user__nickname">
                 <h1 class="user__nickname-text"></h1>

@@ -14,6 +14,8 @@
 
 @import '../styles/blocks/user/user.css';
 @import '../styles/blocks/user/__avatar/user__avatar.css';
+@import '../styles/blocks/user/__avatar-image/user__avatar-image.css';
+@import '../styles/blocks/user/__avatar-edit-button/user__avatar-edit-button.css';
 @import '../styles/blocks/user/__caption/user__caption.css';
 @import '../styles/blocks/user/__nickname/user__nickname.css';
 @import '../styles/blocks/user/__nickname-text/user__nickname-text.css';

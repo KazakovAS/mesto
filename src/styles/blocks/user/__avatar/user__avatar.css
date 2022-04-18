@@ -1,7 +1,7 @@
 .user__avatar {
+  position: relative;
   flex-shrink: 0;
-  height: 120px;
-  width: 120px;
-  object-fit: cover;
   border-radius: 50%;
+  overflow: hidden;
+  line-height: 0;
 }
