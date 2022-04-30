@@ -209,6 +209,8 @@ placeAddButton.addEventListener('click', function()  {
 
 userAvatarEditButton.addEventListener('click', function() {
   formValidators['avatar-edit-form'].checkSubmitButtonValidity();
+
+  avatarEditPopup.open();
 })
 
 enableValidation(validationConfig);
