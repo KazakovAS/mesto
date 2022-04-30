@@ -1,4 +1,4 @@
-class Api {
+export default class Api {
   constructor({ baseUrl, headers }) {
     this._headers = headers;
     this._baseUrl = baseUrl;
@@ -8,16 +8,14 @@ class Api {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     })
-      .then(res => res.ok ? res.json(): Promise.reject(res.status))
-      .catch(console.log)
+      .then(res => this._handleError(res))
   }
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
     })
-      .then(res => res.ok ? res.json(): Promise.reject(res.status))
-      .catch(console.log)
+      .then(res => this._handleError(res))
   }
 
   editProfile(name, about) {
@@ -26,8 +24,7 @@ class Api {
       headers: this._headers,
       body: JSON.stringify({ name, about })
     })
-      .then(res => res.ok ? res.json(): Promise.reject(res.status))
-      .catch(console.log)
+      .then(res => this._handleError(res))
   }
 
   addCard(name, link) {
@@ -36,8 +33,7 @@ class Api {
       headers: this._headers,
       body: JSON.stringify({ name, link })
     })
-      .then(res => res.ok ? res.json(): Promise.reject(res.status))
-      .catch(console.log)
+      .then(res => this._handleError(res))
   }
 
   deleteCard(id) {
@@ -45,8 +41,7 @@ class Api {
       method: "DELETE",
       headers: this._headers
     })
-      .then(res => res.ok ? res.json(): Promise.reject(res.status))
-      .catch(console.log)
+      .then(res => this._handleError(res))
   }
 
   addLike(id) {
@@ -54,8 +49,7 @@ class Api {
       method: "PUT",
       headers: this._headers
     })
-      .then(res => res.ok ? res.json(): Promise.reject(res.status))
-      .catch(console.log)
+      .then(res => this._handleError(res))
   }
 
   deleteLike(id) {
@@ -63,8 +57,7 @@ class Api {
       method: "DELETE",
       headers: this._headers
     })
-      .then(res => res.ok ? res.json(): Promise.reject(res.status))
-      .catch(console.log)
+      .then(res => this._handleError(res))
   }
 
   editAvatar(avatar) {
@@ -73,16 +66,10 @@ class Api {
       headers: this._headers,
       body: JSON.stringify({ avatar })
     })
-      .then(res => res.ok ? res.json(): Promise.reject(res.status))
-      .catch(console.log)
+      .then(res => this._handleError(res))
+  }
+
+  _handleError(res) {
+    return res.ok ? res.json(): Promise.reject(res.status)
   }
 }
-
-export const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-37',
-  headers: {
-    // authorization: '2e5af95a-25b4-4742-9ead-1326c8073602',
-    authorization: '9e805e1a-4ae4-4e34-b6d0-ba7f164bd419',
-    'Content-Type': 'application/json'
-  }
-});

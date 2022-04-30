@@ -6,7 +6,7 @@ import Card from '../scripts/components/Card.js';
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import UserInfo from "../scripts/components/UserInfo.js";
 import PopupWithForm from "../scripts/components/PopupWithForm";
-import { api } from "../scripts/components/Api";
+
 import {
   validationConfig,
   avatarEditPopupSelector,
@@ -20,7 +20,8 @@ import {
   placeAddPopupSelector,
   placeDeletePopupSelector,
   placeAddButton,
-  userAvatarEditButton
+  userAvatarEditButton,
+  api
 } from "../scripts/utils/constants.js";
 
 const formValidators = {};
@@ -33,9 +34,9 @@ api.getProfile()
       about: res.about,
       avatar: res.avatar
     });
-
     userId = res._id;
   })
+  .catch(console.error);
 
 api.getInitialCards()
   .then(items => {
@@ -50,6 +51,7 @@ api.getInitialCards()
       });
     })
   })
+  .catch(console.error);
 
 function enableValidation(config) {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
@@ -72,10 +74,11 @@ function renderCard(data) {
       placeDeletePopup.open();
       placeDeletePopup.changeHandleSubmit(() => {
         api.deleteCard(id)
-          .finally(() => {
+          .then(() => {
             card.removeCard();
             placeDeletePopup.close();
-          });
+          })
+          .catch(console.error);
       })
     },
     (id) => {
@@ -85,12 +88,14 @@ function renderCard(data) {
             card.setLikeStatusDisabled();
             card.updateLikeCount(res.likes)
           })
+          .catch(console.error);
       } else {
         api.addLike(id)
           .then((res) => {
             card.setLikeStatusEnabled();
             card.updateLikeCount(res.likes)
           })
+          .catch(console.error);
       }
     }
   );
@@ -111,11 +116,10 @@ function handleUserInfoEditFormSubmit(data) {
   api.editProfile(name, about)
     .then(() => {
       userInfo.setUserInfo({ name, about });
-    })
-    .finally(() => {
       userInfoEditPopup.close();
       userInfoEditPopup.setSubmitButtonText('Сохранить');
     })
+    .catch(console.error);
 }
 
 function handlePlaceAddFormSubmit(data) {
@@ -134,11 +138,11 @@ function handlePlaceAddFormSubmit(data) {
         userId: userId,
         ownerId: res.owner._id
       });
-    })
-    .finally(() => {
+
       placeAddPopup.close();
       placeAddPopup.setSubmitButtonText('Сохранить');
     })
+    .catch(console.error);
 }
 
 function handleAvatarEditFormSubmit(data) {
@@ -149,11 +153,10 @@ function handleAvatarEditFormSubmit(data) {
   api.editAvatar(avatar)
     .then((res) => {
       userInfo.setAvatar(res.avatar);
-    })
-    .finally(() => {
       avatarEditPopup.close();
       avatarEditPopup.setSubmitButtonText('Сохранить');
     })
+    .catch(console.error);
 }
 
 const placesList = new Section({

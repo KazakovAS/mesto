@@ -61,6 +61,7 @@ export default class Card {
     this._setLikes();
   }
 
+  // index 95
   setLikeStatusEnabled() {
     this._likeButton.classList.add('place__like-button_active');
   }
