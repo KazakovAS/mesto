@@ -34,6 +34,7 @@ api.getProfile()
       about: res.about,
       avatar: res.avatar
     });
+
     userId = res._id;
   })
   .catch(console.error);
