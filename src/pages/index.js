@@ -40,25 +40,20 @@ api.getProfile()
   .catch(console.error);
 
 Promise.all([api.getInitialCards()])
-  .then(([items]) => {
-    items.reverse().forEach(item => {
-      let likeButtonState = true;
-
-      item.likes.forEach(like => {
-        if (like._id !== item.owner._id) {
-          return likeButtonState = false;
-        }
+  .then(() => {
+    api.getInitialCards()
+      .then((items) => {
+        items.reverse().forEach(item => {
+          placesList.addItem({
+            name: item.name,
+            link: item.link,
+            likes: item.likes,
+            id: item._id,
+            userId: userId,
+            ownerId: item.owner._id
+          });
+        })
       })
-
-      placesList.addItem({
-        name: item.name,
-        link: item.link,
-        likes: item.likes,
-        id: item._id,
-        userId: userId,
-        ownerId: item.owner._id
-      });
-    })
   })
   .catch(console.error);
 

@@ -24,13 +24,17 @@ export default class Card {
     this._cardImageEl.src = this._link;
     this._cardImageEl.alt = this._imageAlt;
 
-    if(this._userId !== this._ownerId) this._cardRemoveButton.style.display = 'none';
+    if(this._userId !== this._ownerId) this.hideCardRemoveButton();
 
     if(this.isLiked()) {
       this.setLikeStatusEnabled();
     }
 
     this._setLikes();
+  }
+
+  hideCardRemoveButton() {
+    this._cardRemoveButton.style.display = 'none';
   }
 
   _setEventListeners() {
