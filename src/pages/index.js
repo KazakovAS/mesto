@@ -39,16 +39,24 @@ api.getProfile()
   })
   .catch(console.error);
 
-api.getInitialCards()
-  .then(items => {
-    items.reverse().forEach(data => {
+Promise.all([api.getInitialCards()])
+  .then(([items]) => {
+    items.reverse().forEach(item => {
+      let likeButtonState = true;
+
+      item.likes.forEach(like => {
+        if (like._id !== item.owner._id) {
+          return likeButtonState = false;
+        }
+      })
+
       placesList.addItem({
-        name: data.name,
-        link: data.link,
-        likes: data.likes,
-        id: data._id,
+        name: item.name,
+        link: item.link,
+        likes: item.likes,
+        id: item._id,
         userId: userId,
-        ownerId: data.owner._id
+        ownerId: item.owner._id
       });
     })
   })

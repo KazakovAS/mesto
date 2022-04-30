@@ -27,7 +27,6 @@ export const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-40',
   headers: {
     authorization: 'e9991a6f-eae8-43d4-9748-5d955e306020',
-    // authorization: '9e805e1a-4ae4-4e34-b6d0-ba7f164bd419',
     'Content-Type': 'application/json'
   }
 });
