@@ -24,13 +24,17 @@ export default class Card {
     this._cardImageEl.src = this._link;
     this._cardImageEl.alt = this._imageAlt;
 
-    if(this._userId !== this._ownerId) this._cardRemoveButton.style.display = 'none';
+    if(this._userId !== this._ownerId) this.hideCardRemoveButton();
 
     if(this.isLiked()) {
       this.setLikeStatusEnabled();
     }
 
     this._setLikes();
+  }
+
+  hideCardRemoveButton() {
+    this._cardRemoveButton.style.display = 'none';
   }
 
   _setEventListeners() {
@@ -61,10 +65,7 @@ export default class Card {
     this._setLikes();
   }
 
-  setLikeStatusEnabled() {
-    this._likeButton.classList.add('place__like-button_active');
-  }
-
+  // index 95
   setLikeStatusDisabled() {
     this._likeButton.classList.remove('place__like-button_active');
   }

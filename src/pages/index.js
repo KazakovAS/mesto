@@ -20,7 +20,8 @@ import {
   placeAddPopupSelector,
   placeDeletePopupSelector,
   placeAddButton,
-  userAvatarEditButton
+  userAvatarEditButton,
+  api
 } from "../scripts/utils/constants.js";
 
 const formValidators = {};
@@ -36,20 +37,25 @@ api.getProfile()
 
     userId = res._id;
   })
+  .catch(console.error);
 
-api.getInitialCards()
-  .then(items => {
-    items.forEach(data => {
-      placesList.addItem({
-        name: data.name,
-        link: data.link,
-        likes: data.likes,
-        id: data._id,
-        userId: userId,
-        ownerId: data.owner._id
-      });
-    })
+Promise.all([api.getInitialCards()])
+  .then(() => {
+    api.getInitialCards()
+      .then((items) => {
+        items.reverse().forEach(item => {
+          placesList.addItem({
+            name: item.name,
+            link: item.link,
+            likes: item.likes,
+            id: item._id,
+            userId: userId,
+            ownerId: item.owner._id
+          });
+        })
+      })
   })
+  .catch(console.error);
 
 function enableValidation(config) {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
@@ -72,10 +78,11 @@ function renderCard(data) {
       placeDeletePopup.open();
       placeDeletePopup.changeHandleSubmit(() => {
         api.deleteCard(id)
-          .finally(() => {
+          .then(() => {
             card.removeCard();
             placeDeletePopup.close();
-          });
+          })
+          .catch(console.error);
       })
     },
     (id) => {
@@ -85,6 +92,7 @@ function renderCard(data) {
             card.setLikeStatusDisabled();
             card.updateLikeCount(res.likes)
           })
+          .catch(console.error);
       } else {
         api.addLike(id)
           .then((res) => {
@@ -111,11 +119,10 @@ function handleUserInfoEditFormSubmit(data) {
   api.editProfile(name, about)
     .then(() => {
       userInfo.setUserInfo({ name, about });
-    })
-    .finally(() => {
       userInfoEditPopup.close();
       userInfoEditPopup.setSubmitButtonText('Сохранить');
     })
+    .catch(console.error);
 }
 
 function handlePlaceAddFormSubmit(data) {
@@ -134,11 +141,11 @@ function handlePlaceAddFormSubmit(data) {
         userId: userId,
         ownerId: res.owner._id
       });
-    })
-    .finally(() => {
+
       placeAddPopup.close();
       placeAddPopup.setSubmitButtonText('Сохранить');
     })
+    .catch(console.error);
 }
 
 function handleAvatarEditFormSubmit(data) {
@@ -149,11 +156,10 @@ function handleAvatarEditFormSubmit(data) {
   api.editAvatar(avatar)
     .then((res) => {
       userInfo.setAvatar(res.avatar);
-    })
-    .finally(() => {
       avatarEditPopup.close();
       avatarEditPopup.setSubmitButtonText('Сохранить');
     })
+    .catch(console.error);
 }
 
 const placesList = new Section({
@@ -203,7 +209,7 @@ placeAddButton.addEventListener('click', function()  {
 });
 
 userAvatarEditButton.addEventListener('click', function() {
-  avatarEditPopup.open();
+  formValidators['avatar-edit-form'].checkSubmitButtonValidity();
 })
 
 enableValidation(validationConfig);
