@@ -41,7 +41,7 @@ api.getProfile()
 
 api.getInitialCards()
   .then(items => {
-    items.forEach(data => {
+    items.reverse().forEach(data => {
       placesList.addItem({
         name: data.name,
         link: data.link,
@@ -207,6 +207,7 @@ placeAddButton.addEventListener('click', function()  {
 });
 
 userAvatarEditButton.addEventListener('click', function() {
+  formValidators['avatar-edit-form'].checkSubmitButtonValidity();
   avatarEditPopup.open();
 })
 
