@@ -66,10 +66,6 @@ export default class Card {
   }
 
   // index 95
-  setLikeStatusEnabled() {
-    this._likeButton.classList.add('place__like-button_active');
-  }
-
   setLikeStatusDisabled() {
     this._likeButton.classList.remove('place__like-button_active');
   }

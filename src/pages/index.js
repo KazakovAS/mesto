@@ -6,7 +6,7 @@ import Card from '../scripts/components/Card.js';
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import UserInfo from "../scripts/components/UserInfo.js";
 import PopupWithForm from "../scripts/components/PopupWithForm";
-
+import { api } from "../scripts/components/Api";
 import {
   validationConfig,
   avatarEditPopupSelector,
@@ -99,7 +99,6 @@ function renderCard(data) {
             card.setLikeStatusEnabled();
             card.updateLikeCount(res.likes)
           })
-          .catch(console.error);
       }
     }
   );
@@ -211,7 +210,6 @@ placeAddButton.addEventListener('click', function()  {
 
 userAvatarEditButton.addEventListener('click', function() {
   formValidators['avatar-edit-form'].checkSubmitButtonValidity();
-  avatarEditPopup.open();
 })
 
 enableValidation(validationConfig);
