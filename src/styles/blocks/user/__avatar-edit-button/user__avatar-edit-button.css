@@ -16,6 +16,7 @@
 .user__avatar-edit-button:hover,
 .user__avatar-edit-button:focus-visible {
   background: rgba(0, 0, 0, .8);
+  cursor: pointer;
 }
 
 .user__avatar-edit-button::before {

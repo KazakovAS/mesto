@@ -26,33 +26,26 @@ import {
 const formValidators = {};
 let userId;
 
-api.getProfile()
-  .then(res => {
+Promise.all([api.getProfile() ,api.getInitialCards()])
+  .then(([profile, cards]) => {
     userInfo.setUserInfo({
-      name: res.name,
-      about: res.about,
-      avatar: res.avatar
+      name: profile.name,
+      about: profile.about,
+      avatar: profile.avatar
     });
 
-    userId = res._id;
-  })
-  .catch(console.error);
+    userId = profile._id;
 
-Promise.all([api.getInitialCards()])
-  .then(() => {
-    api.getInitialCards()
-      .then((items) => {
-        items.reverse().forEach(item => {
-          placesList.addItem({
-            name: item.name,
-            link: item.link,
-            likes: item.likes,
-            id: item._id,
-            userId: userId,
-            ownerId: item.owner._id
-          });
-        })
-      })
+    cards.reverse().forEach(item => {
+      placesList.addItem({
+        name: item.name,
+        link: item.link,
+        likes: item.likes,
+        id: item._id,
+        userId: userId,
+        ownerId: item.owner._id
+      });
+    })
   })
   .catch(console.error);
 
