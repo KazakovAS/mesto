@@ -119,6 +119,8 @@ function handleUserInfoEditFormSubmit(data) {
     .then(() => {
       userInfo.setUserInfo({ name, about });
       userInfoEditPopup.close();
+    })
+    .finally(() => {
       userInfoEditPopup.setSubmitButtonText('Сохранить');
     })
     .catch(console.error);
@@ -142,6 +144,8 @@ function handlePlaceAddFormSubmit(data) {
       });
 
       placeAddPopup.close();
+    })
+    .finally(() => {
       placeAddPopup.setSubmitButtonText('Сохранить');
     })
     .catch(console.error);
@@ -156,6 +160,8 @@ function handleAvatarEditFormSubmit(data) {
     .then((res) => {
       userInfo.setAvatar(res.avatar);
       avatarEditPopup.close();
+    })
+    .finally(() => {
       avatarEditPopup.setSubmitButtonText('Сохранить');
     })
     .catch(console.error);
