@@ -91,6 +91,7 @@ function renderCard(data) {
             card.setLikeStatusEnabled();
             card.updateLikeCount(res.likes)
           })
+          .catch(console.error);
       }
     }
   );
@@ -113,10 +114,10 @@ function handleUserInfoEditFormSubmit(data) {
       userInfo.setUserInfo({ name, about });
       userInfoEditPopup.close();
     })
+    .catch(console.error)
     .finally(() => {
       userInfoEditPopup.setSubmitButtonText('Сохранить');
     })
-    .catch(console.error);
 }
 
 function handlePlaceAddFormSubmit(data) {
@@ -138,10 +139,10 @@ function handlePlaceAddFormSubmit(data) {
 
       placeAddPopup.close();
     })
+    .catch(console.error)
     .finally(() => {
       placeAddPopup.setSubmitButtonText('Сохранить');
     })
-    .catch(console.error);
 }
 
 function handleAvatarEditFormSubmit(data) {
@@ -154,10 +155,10 @@ function handleAvatarEditFormSubmit(data) {
       userInfo.setAvatar(res.avatar);
       avatarEditPopup.close();
     })
+    .catch(console.error)
     .finally(() => {
       avatarEditPopup.setSubmitButtonText('Сохранить');
     })
-    .catch(console.error);
 }
 
 const placesList = new Section({
